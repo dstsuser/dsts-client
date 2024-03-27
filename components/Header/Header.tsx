@@ -32,39 +32,28 @@ import {
   } from '@tabler/icons-react';
   import classes from './Header.module.css';
 import ThemeSwitch from '../ThemeSwitch/ThemeSwitch';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
   const mockdata = [
     {
       icon: IconCode,
-      title: 'Open source',
-      description: 'This Pokémon’s cry is very loud and distracting',
+      title: 'Running',
+      description: 'Formed in 18 July 2023',
     },
     {
       icon: IconCoin,
-      title: 'Free for everyone',
-      description: 'The fluid of Smeargle’s tail secretions changes',
+      title: 'Founding',
+      description: 'Founded in 12 July 2015',
     },
     {
       icon: IconBook,
-      title: 'Documentation',
-      description: 'Yanma is capable of seeing 360 degrees without',
-    },
-    {
-      icon: IconFingerprint,
-      title: 'Security',
-      description: 'The shell’s rounded shape and the grooves on its.',
-    },
-    {
-      icon: IconChartPie3,
-      title: 'Analytics',
-      description: 'This Pokémon uses its flying ability to quickly chase',
-    },
-    {
-      icon: IconNotification,
-      title: 'Notifications',
-      description: 'Combusken battles with the intensely hot flames it spews',
+      title: 'Former',
+      description: 'Total 12 Committees',
     },
   ];
+
+
 
 export function Header() {
     const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
@@ -88,21 +77,32 @@ export function Header() {
       </UnstyledButton>
     )
   );
+
+  const router = useRouter()
+    
+  const onHandleClick = (button:string)=>{
+    if(button === 'login'){
+        router.push('/login')
+    }else if(button === 'signup'){
+        router.push('/register')
+    }
+  }
+
     return (
       <Box pb={120}>
         <header className={classes.header}>
           <Group justify="space-between" h="100%">
             <MantineLogo size={30} />
             <Group h="100%" gap={0} visibleFrom="sm">
-              <a href="#" className={classes.link}>
+              <Link href="/" className={classes.link}>
                 Home
-              </a>
+              </Link>
               <HoverCard width={600} position="bottom" radius="md" shadow="md" withinPortal>
                 <HoverCard.Target>
                   <a href="#" className={classes.link}>
                     <Center inline>
                       <Box component="span" mr={5}>
-                        Features
+                        Committee
                       </Box>
                       <IconChevronDown
                         style={{ width: rem(16), height: rem(16) }}
@@ -120,11 +120,11 @@ export function Header() {
                   </Group>
                   <Divider my="sm" />
 
-                  <SimpleGrid cols={2} spacing={0}>
+                  <SimpleGrid cols={3} spacing={0}>
                     {links}
                   </SimpleGrid>
 
-                  <div className={classes.dropdownFooter}>
+                  {/* <div className={classes.dropdownFooter}>
                     <Group justify="space-between">
                       <div>
                         <Text fw={500} fz="sm">
@@ -136,21 +136,29 @@ export function Header() {
                       </div>
                       <Button variant="default">Get started</Button>
                     </Group>
-                  </div>
+                  </div> */}
                 </HoverCard.Dropdown>
               </HoverCard>
               <a href="#" className={classes.link}>
-                Learn
+                Members
               </a>
               <a href="#" className={classes.link}>
-                Academy
+                Blogs
               </a>
+              <a href="#" className={classes.link}>
+                About Us
+              </a>
+              <Link href="/contact" className={classes.link}>
+                Contact
+              </Link>
             </Group>
 
             <Group visibleFrom="sm">
               <ThemeSwitch />
-              <Button variant="default">Log in</Button>
-              <Button>Sign up</Button>
+              <Button variant="default" onClick={()=>onHandleClick('login')}>
+                Log in
+              </Button>
+              <Button onClick={()=>onHandleClick('signup')}>Sign up</Button>
             </Group>
 
             <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm" />
@@ -193,8 +201,8 @@ export function Header() {
             <Divider my="sm" />
             <Group justify="center" grow pb="xl" px="md">
               <ThemeSwitch />
-              <Button variant="default">Log in</Button>
-              <Button>Sign up</Button>
+              <Button variant="default" onClick={()=>onHandleClick('login')}>Log in</Button>
+              <Button onClick={()=>onHandleClick('signup')}>Sign up</Button>
             </Group>
           </ScrollArea>
         </Drawer>

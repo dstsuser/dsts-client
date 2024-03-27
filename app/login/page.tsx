@@ -1,3 +1,4 @@
+'use client'
 import {
     TextInput,
     PasswordInput,
@@ -11,8 +12,40 @@ import {
     Button,
   } from '@mantine/core';
   import classes from './page.module.css';
+import { useEffect, useState } from 'react';
+import { useForm } from '@mantine/form';
+import { useLoginMutation } from '@/lib/redux/features/auth/authApi';
+import { useDispatch } from 'react-redux';
 
   export default function Login() {
+
+    const [login,{isLoading,isError}] = useLoginMutation()
+    const dispatch = useDispatch();
+
+    const form = useForm({
+      initialValues: {
+        phone: '',
+        password: '',
+        rememberMe: false,
+      },
+      validate: {
+        phone: (value) => (value.length === 11 ? null : 'Phone number must be 11 characters'),
+        password: (value) => {
+          const hasUpperCase = /[A-Z]/.test(value);
+          const hasNumber = /\d/.test(value);
+          const isValidLength = value.length >= 6;
+          if (isValidLength) {
+            return null;
+          }
+          return 'Password must be at least 6 characters long';
+        },
+      },
+    });
+
+    const handleSubmit = (values:any) => {
+      login({primaryPhone:values.phone,password:values.password})
+    }
+
     return (
       <Container size={420} my={40}>
         <Title ta="center" className={classes.title}>
@@ -26,17 +59,32 @@ import {
         </Text>
 
         <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-          <TextInput label="Email" placeholder="you@mantine.dev" required />
-          <PasswordInput label="Password" placeholder="Your password" required mt="md" />
+
+        <form onSubmit={form.onSubmit((values) =>handleSubmit(values))}>
+          <TextInput 
+              label="Phone" 
+              placeholder="Ex 017XXXXXXXX"
+              {...form.getInputProps('phone')}
+              required 
+          />
+          <PasswordInput 
+              label="Password" 
+              placeholder="Your password" 
+              {...form.getInputProps('password')}
+              required mt="md" 
+          />
           <Group justify="space-between" mt="lg">
-            <Checkbox label="Remember me" />
+            <Checkbox label="Remember me" 
+                 {...form.getInputProps('rememberMe', { type: 'checkbox' })}
+            />
             <Anchor component="button" size="sm">
               Forgot password?
             </Anchor>
           </Group>
-          <Button fullWidth mt="xl">
+          <Button fullWidth mt="xl" type='submit'>
             Sign in
           </Button>
+          </form>
         </Paper>
       </Container>
     );
