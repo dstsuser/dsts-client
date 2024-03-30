@@ -1,18 +1,22 @@
-'use client'
-import { Grid } from '@mantine/core'
-import React from 'react'
-import HomeNotice from '../HomeNotice/HomeNotice'
-import Brief from '../Brief/Brief'
+import { Container, Grid, SimpleGrid, Skeleton, rem } from '@mantine/core';
+import HomeNotice from '../HomeNotice/HomeNotice';
+import Brief from '../Brief/Brief';
 
-export default function BriefAndNotice() {
+const PRIMARY_COL_HEIGHT = rem(300);
+
+export function BriefAndNotice() {
+  const SECONDARY_COL_HEIGHT = `calc(${PRIMARY_COL_HEIGHT} / 2 - var(--mantine-spacing-md) / 2)`;
+
   return (
-    <Grid>
-        <Grid.Col span={6}>
+    <Container my="md">
+      <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">
+        <div style={{height:'400px'}}>
             <HomeNotice/>
-        </Grid.Col>
-        <Grid.Col span={6}>
+        </div>
+        <div>
             <Brief/>
-        </Grid.Col>
-    </Grid>
-  )
+        </div>
+      </SimpleGrid>
+    </Container>
+  );
 }
