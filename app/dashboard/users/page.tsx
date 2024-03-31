@@ -131,7 +131,7 @@ export default function Users() {
     <>
         <Container size='xl' py="md">
             <div style={{display:'flex',justifyContent:'space-between'}}>
-                <Text size="xl" weight={700}>Users</Text>
+                <Text size="xl">Users</Text>
                 <Button onClick={()=>dispatch(openModal({title:'Create User',type:'createUser'}))}>Add User</Button>
             </div>
             <div style={{display:'flex', justifyContent:'center'}}>
