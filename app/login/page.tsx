@@ -16,11 +16,16 @@ import { useEffect, useState } from 'react';
 import { useForm } from '@mantine/form';
 import { useLoginMutation } from '@/lib/redux/features/auth/authApi';
 import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/navigation';
+import useAuth from '@/hooks/useAuth';
 
   export default function Login() {
 
+
     const [login,{isLoading,isError}] = useLoginMutation()
     const dispatch = useDispatch();
+    const router = useRouter();
+    const auth = useAuth();
 
     const form = useForm({
       initialValues: {
@@ -42,8 +47,22 @@ import { useDispatch } from 'react-redux';
       },
     });
 
+    useEffect(()=>{
+      if(auth){
+        router.push('/')
+      }
+    },[auth])
+
     const handleSubmit = (values:any) => {
       login({primaryPhone:values.phone,password:values.password})
+      .unwrap().then((data)=>{
+        if(data.token){
+          if(window.history.length>0){
+            router.back()
+          }
+          router.push('/')
+        }
+      })
     }
 
     return (

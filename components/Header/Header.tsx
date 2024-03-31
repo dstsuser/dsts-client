@@ -18,6 +18,7 @@ import {
     ScrollArea,
     rem,
     useMantineTheme,
+    Table,
   } from '@mantine/core';
   import { MantineLogo } from '@mantinex/mantine-logo';
   import { useDisclosure } from '@mantine/hooks';
@@ -29,11 +30,16 @@ import {
     IconFingerprint,
     IconCoin,
     IconChevronDown,
+    IconLogout,
   } from '@tabler/icons-react';
   import classes from './Header.module.css';
 import ThemeSwitch from '../ThemeSwitch/ThemeSwitch';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useGetCommitteeListQuery } from '@/lib/redux/features/committee/committeeApi';
+import useAuth from '@/hooks/useAuth';
+import { UserMenu } from '../UserMenu/UserMenu';
+import { useDispatch, useSelector } from 'react-redux';
 
   const mockdata = [
     {
@@ -57,8 +63,10 @@ import { useRouter } from 'next/navigation';
 
 export function Header() {
     const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
+    const {data,isLoading} = useGetCommitteeListQuery('arg')
     const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
     const theme = useMantineTheme();
+    const dispatch = useDispatch()
     const links = mockdata.map((item) => (
       <UnstyledButton className={classes.subLink} key={item.title}>
         <Group wrap="nowrap" align="flex-start">
@@ -78,6 +86,10 @@ export function Header() {
     )
   );
 
+  const auth = useAuth();
+  const {user} = useSelector((state:any)=>state.auth);
+  console.log(user)
+
   const router = useRouter()
     
   const onHandleClick = (button:string)=>{
@@ -87,6 +99,8 @@ export function Header() {
         router.push('/register')
     }
   }
+
+
 
     return (
       <Box pb={120}>
@@ -124,19 +138,19 @@ export function Header() {
                     {links}
                   </SimpleGrid>
 
-                  {/* <div className={classes.dropdownFooter}>
-                    <Group justify="space-between">
-                      <div>
-                        <Text fw={500} fz="sm">
-                          Get started
-                        </Text>
-                        <Text size="xs" c="dimmed">
-                          Their food sources have decreased, and their numbers
-                        </Text>
-                      </div>
-                      <Button variant="default">Get started</Button>
-                    </Group>
-                  </div> */}
+                  <div className={classes.dropdownFooter}>
+                    <div>
+                      {
+                        data?.committee?.map((item:any)=>{
+                          return <div key={item?._id}>
+                            <Text size="sm" fw={500}>
+                              {item?.name}
+                            </Text>
+                          </div>
+                        })
+                      }
+                    </div>
+                  </div>
                 </HoverCard.Dropdown>
               </HoverCard>
               <a href="#" className={classes.link}>
@@ -155,10 +169,21 @@ export function Header() {
 
             <Group visibleFrom="sm">
               <ThemeSwitch />
-              <Button variant="default" onClick={()=>onHandleClick('login')}>
-                Log in
-              </Button>
-              <Button onClick={()=>onHandleClick('signup')}>Sign up</Button>
+              {
+                auth? (
+                  <div style={{display:'flex',gap:'5px',alignItems:'center'}}>
+                     <UserMenu user={user}/>
+                  </div>
+                  
+                )
+                :
+                <div>
+                    <Button variant="default" me="sm" onClick={()=>onHandleClick('login')}>
+                      Log in
+                    </Button>
+                    <Button onClick={()=>onHandleClick('signup')}>Sign up</Button>
+                  </div>
+              }
             </Group>
 
             <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm" />
