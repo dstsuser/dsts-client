@@ -27,7 +27,7 @@ export const authApi = apiSlice.injectEndpoints({
                     const result = await queryFulfilled;
                     const token = result?.data?.token;
                     const payload = jwtDecode(token) as any;
-                    const accept = ['USER'];
+                    const accept = ['USER','ADMIN'];
                     if(accept.some(user=> payload?.roles?.includes(user))){
                         localStorage.setItem('auth', JSON.stringify({
                             token:  token,
