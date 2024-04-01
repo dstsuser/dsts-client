@@ -14,7 +14,7 @@ export function BriefAndNotice() {
             <HomeNotice/>
         </div>
         <div>
-            <Brief/>
+            <HomeNotice/>
         </div>
       </SimpleGrid>
     </Container>

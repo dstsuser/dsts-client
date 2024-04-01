@@ -9,16 +9,12 @@ export function HeroImage() {
 
       <div className={classes.inner}>
         <Title className={classes.title}>
-          Automated AI code reviews for{' '}
-          <Text component="span" inherit className={classes.highlight}>
-            any stack
-          </Text>
+         Lorem ipsum dolor sit, amet consectetur adipisicing.
         </Title>
 
         <Container size={640}>
           <Text size="lg" className={classes.description}>
-            Build more reliable software with AI companion. AI is also trained to detect lazy
-            developers who do nothing and just complain on Twitter.
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit, dolore exercitationem. Exercitationem impedit repellat, repudiandae reiciendis deserunt esse quos voluptatem nobis autem quod.
           </Text>
         </Container>
 
