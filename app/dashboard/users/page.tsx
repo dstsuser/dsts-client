@@ -1,33 +1,27 @@
 'use client'
 import SimpleModal from '@/components/Modals/SimpleModal';
+import UserEditModalBody from '@/components/Modals/UserEditModalBody';
 import { closeModal, openModal } from '@/lib/redux/features/modal/modalSlice';
 import { useGetAllUsersQuery, usePostUserMutation, useUploadProfileImageMutation } from '@/lib/redux/features/user/userApi'
-import { Avatar, Box, Button, Container, FileInput, Group, Table, Text, TextInput } from '@mantine/core';
+import { Avatar, Box, Button, Checkbox, Container, FileInput, Grid, Group, Table, Text, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { notifications } from '@mantine/notifications';
+import { IconCamera, IconEdit, IconTrash } from '@tabler/icons-react';
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-
-
-
 
 
 export default function Users() {
 
     const {data,isLoading,isError,refetch} = useGetAllUsersQuery('user')
     const [postUser] = usePostUserMutation()
-    const [uploadProfileImage] = useUploadProfileImageMutation()
+    const [uploadProfileImage,{isLoading:avatarUploading}] = useUploadProfileImageMutation()
     const dispatch = useDispatch();
     const [value, setValue] = useState<File | null>(null);
-    const [userId, setUserId] = useState('');
+    const [user, setUser] = useState({} as any);
     const {type} = useSelector((state:any) => state.modal);
 
-    const form = useForm({
-        initialValues: {
-          primaryEmail: '',
-          primaryPhone: '',
-          fullName: '',
-        },
-      });
+    const form = useForm();
 
     const handleCreateUser = (values:any)=>{
         postUser(values)
@@ -44,29 +38,41 @@ export default function Users() {
     }
 
     const handleUploadImage = (values:any)=>{
-        console.log(values)
         const form = new FormData();
         form.append('avatar', values)
-        uploadProfileImage({id:userId,form})
+        uploadProfileImage({id:user._id,form})
         .unwrap()
         .then((res)=>{
             if(res){
                 refetch()
                 dispatch(closeModal())
-                setUserId('')
+                setUser('')
                 setValue(null)
+                notifications.show({
+                    title: 'Success 🎉',
+                    message: 'Avatar upload successfully !',
+                  })
             }
         })
         .catch((err)=>{
             console.log(err)
-            setUserId('')
+            setUser('')
             setValue(null)
+            notifications.show({
+                title: 'Error',
+                message: 'Failed to upload avatar !',
+              })
         })
     }
 
-    const openImageModal = (id:string)=>{
-        setUserId(id)
+    const openImageModal = (user:any)=>{
+        setUser(user)
         dispatch(openModal({title:'Upload Avatar',type:'uploadImage'}));
+    }
+
+    const openEditModal = (user:any)=>{
+        setUser(user)
+        dispatch(openModal({title:'Edit User',type:'editUser',size:'lg'}));
     }
 
     const rows = data?.users?.map((item:any) => {
@@ -86,13 +92,11 @@ export default function Users() {
             <Table.Td>{item.isAlumni?'Yes':'No'}</Table.Td>
             <Table.Td>
                 <Group>
-                    <Text size="sm" style={{cursor:'pointer'}} color="blue" onClick={()=>{console.log('edit')}}>
-                    Edit
-                    </Text>
-                    <Text size="sm" color="red" style={{cursor:'pointer'}} onClick={()=>{console.log('delete')}}>
-                    Delete
-                    </Text>
-                    <Button size="xs" onClick={()=>{openImageModal(item?._id)}}>Avatar</Button>
+                    <Button size='xs' variant='transparent' onClick={()=>{openEditModal(item)}}><IconEdit fontSize={'12px'}/></Button>
+                    <Button size='xs' variant='transparent'><IconTrash color='red' fontSize={'12px'}/></Button>
+                    <Button variant='transparent' size="xs" onClick={()=>{openImageModal(item)}}>
+                        <IconCamera fontSize={'12px'}/>
+                    </Button>
                 </Group>
             </Table.Td>
           </Table.Tr>
@@ -125,14 +129,12 @@ export default function Users() {
       </Table>
     }
 
-
-
   return (
     <>
         <Container size='xl' py="md">
             <div style={{display:'flex',justifyContent:'space-between'}}>
                 <Text size="xl">Users</Text>
-                <Button onClick={()=>dispatch(openModal({title:'Create User',type:'createUser'}))}>Add User</Button>
+                <Button onClick={()=>dispatch(openModal({title:'Create User',type:'createUser',size:'lg'}))}> Add User</Button>
             </div>
             <div style={{display:'flex', justifyContent:'center'}}>
                 {tableContent}
@@ -140,41 +142,25 @@ export default function Users() {
         </Container>
         {type==='createUser' &&
         <SimpleModal>
-            <Box maw={340} mx="auto">
-                <form onSubmit={form.onSubmit((values) => handleCreateUser(values))}>
-                    <TextInput
-                        withAsterisk
-                        label="Full Name"
-                        placeholder="Name"
-                        {...form.getInputProps('fullName')}
-                    />
-                    <TextInput
-                        withAsterisk
-                        label="Primary Phone"
-                        placeholder="017XXXXXXXX"
-                        {...form.getInputProps('primaryPhone')}
-                    />
-                    <TextInput
-                        withAsterisk
-                        label="Primary Email"
-                        placeholder="your@email.com"
-                        {...form.getInputProps('primaryEmail')}
-                    />
-                    <Group justify="flex-end" mt="md">
-                        <Button type="submit">Submit</Button>
-                    </Group>
-                </form>
-            </Box>
+            <UserEditModalBody user={''}/>
         </SimpleModal>}
         {type==='uploadImage' &&
         <SimpleModal>
-            <Box maw={340} mx="auto">
+            <Box mx="auto">
                 <FileInput value={value} onChange={setValue} />
                 <Group justify="flex-end" mt="md">
-                    <Button onClick={()=>handleUploadImage(value)}>Submit</Button>
+                    <Button onClick={()=>handleUploadImage(value)}>{
+                        avatarUploading?'Uploading...':'Upload'
+                    }</Button>
                 </Group>
             </Box>
         </SimpleModal>}
+
+        {type==='editUser' &&
+        <SimpleModal>
+            <UserEditModalBody user={user} />
+        </SimpleModal>
+        }
     </>
   )
 }

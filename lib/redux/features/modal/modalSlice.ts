@@ -6,6 +6,7 @@ const initialState = {
   opened: false,
   type: '',
   title:'',
+  size:'lg'
 };
 
 const modalSlice = createSlice({
@@ -16,11 +17,13 @@ const modalSlice = createSlice({
         state.opened = true;
         state.type = action.payload.type;
         state.title = action.payload.title;
+        state.size = action.payload.size;
         },
     closeModal: state => {
-      state.opened = false;
-      state.type = '';
-      state.title = '';
+        state.opened = false;
+        state.type = '';
+        state.title = '';
+        state.size = 'lg';
     },
   },
 });

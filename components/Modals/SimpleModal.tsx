@@ -4,8 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { closeModal, openModal } from '@/lib/redux/features/modal/modalSlice';
 
 function SimpleModal({children}:{children:any}) {
-    const {opened,title} = useSelector((state:any) => state.modal);
+    const {opened,title,size} = useSelector((state:any) => state.modal);
     const dispatch = useDispatch();
+    console.log(opened,title,size)
+
 
     
     const handleClose = () => {
@@ -14,7 +16,7 @@ function SimpleModal({children}:{children:any}) {
 
   return (
     <>
-      <Modal opened={opened} onClose={handleClose} centered title={title}>
+      <Modal opened={opened} onClose={handleClose} centered title={title} size={size?size:'md'}>
         {
             children
         }
