@@ -172,7 +172,10 @@ export function Header() {
               {
                 auth? (
                   <div style={{display:'flex',gap:'5px',alignItems:'center'}}>
-                     <UserMenu user={user}/>
+                     {/* <UserMenu user={user}/> */}
+                     <Button variant="default" me="sm" onClick={()=>router.push('/dashboard')}>
+                      Dashboard
+                    </Button>
                   </div>
                   
                 )

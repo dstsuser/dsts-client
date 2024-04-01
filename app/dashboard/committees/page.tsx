@@ -1,12 +1,13 @@
 'use client'
 import SimpleModal from '@/components/Modals/SimpleModal';
 import UserEditModalBody from '@/components/Modals/UserEditModalBody';
-import { useCreateCommitteePositionMutation, useGetCommitteeListQuery, useGetCommitteePositionsQuery } from '@/lib/redux/features/committee/committeeApi';
+import { useCreateCommitteeMutation, useCreateCommitteePositionMutation, useGetCommitteeListQuery } from '@/lib/redux/features/committee/committeeApi';
 import { closeModal, openModal } from '@/lib/redux/features/modal/modalSlice';
-import { Box, Button, Container, Group, Table, Text, TextInput } from '@mantine/core';
+import { Box, Button, Container, Grid, Group, Table, Text, TextInput, Textarea } from '@mantine/core';
+import { DatePickerInput } from '@mantine/dates';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
-import { IconEdit, IconEye, IconTrash } from '@tabler/icons-react';
+import {IconEye, IconTrash } from '@tabler/icons-react';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,36 +15,30 @@ import { useDispatch, useSelector } from 'react-redux';
 
 export default function Committees() {
 
-    const {data,isLoading,isError,refetch} = useGetCommitteeListQuery('committees')
-    const [createCommitteePosition,{isLoading:createLoading}] = useCreateCommitteePositionMutation()
+    const {data,isLoading,isError,refetch} = useGetCommitteeListQuery('committees');
+    const [createCommittee,{isLoading:createCommitteeLoading}] = useCreateCommitteeMutation()
 
     const dispatch = useDispatch();
-    const [user, setUser] = useState({} as any);
     const {type} = useSelector((state:any) => state.modal);
     const form = useForm();
     const router = useRouter()
 
 
-    const openEditModal = (user:any)=>{
-        setUser(user)
-        dispatch(openModal({title:'Edit User',type:'editUser',size:'md'}));
-    }
-
-    const handleCreatePosition = async (values:any)=>{
-        createCommitteePosition({title:values.title})
+    const handleCreateCommittee = async (values:any)=>{
+        createCommittee(values)
         .unwrap()
         .then((data)=>{
             notifications.show({
                 title: 'Success 🎉',
-             message: 'Position created successfully !',
+             message: 'Committee created successfully !',
             })
             dispatch(closeModal())
             refetch()
         })
         .catch((error)=>{
             notifications.show({
-                title: 'Error',
-                message: 'An error occurred while creating position !'
+                title: 'Error 😢',
+                message: 'An error occurred while creating Committee !'
               })
         })
     }
@@ -101,35 +96,57 @@ export default function Committees() {
         <Container size='xl' py="md">
             <div style={{display:'flex',justifyContent:'space-between'}}>
                 <Text size="xl">Positions</Text>
-                <Button onClick={()=>dispatch(openModal({title:'Create Position',type:'createPosition',size:'md'}))}> Add Position</Button>
+                <Button onClick={()=>dispatch(openModal({title:'Create Committee',type:'createCommittee',size:'lg'}))}> Add Committee</Button>
             </div>
             <div style={{display:'flex', justifyContent:'center'}}>
                 {tableContent}
             </div>
         </Container>
-        {type==='createPosition' &&
+        {type==='createCommittee' &&
         <SimpleModal>
             <Box mx="auto">
-                <form onSubmit={form.onSubmit((values) => handleCreatePosition(values))}>
+                <form onSubmit={form.onSubmit((values) => handleCreateCommittee(values))}>
                         <TextInput
                             mb={'sm'}
                             withAsterisk
-                            label="Position Name"
+                            label="Committee Name"
                             placeholder="Name"
-                            {...form.getInputProps('title')}
+                            {...form.getInputProps('name')}
+                        />
+                        <Grid mb={'sm'}>
+                            <Grid.Col span={{ base: 12, md: 6 }}>
+                                <TextInput
+                                    mb={'sm'}
+                                    withAsterisk
+                                    label="Committee Year"
+                                    placeholder="Year"
+                                    {...form.getInputProps('year')}
+                                />
+                            </Grid.Col>
+                            <Grid.Col span={{ base: 12, md: 6 }}>
+                                <TextInput
+                                    mb={'sm'}
+                                    withAsterisk
+                                    label="Forming Date"
+                                    placeholder="Date"
+                                    type='date'
+                                    {...form.getInputProps('formingDate')}
+                                />
+                            </Grid.Col>
+                        </Grid>
+                        <Textarea
+                            mb={'sm'}
+                            withAsterisk
+                            label="Description"
+                            placeholder="Description"
+                            {...form.getInputProps('description')}
                         />
                         <Group justify="flex-end" mt="md">
-                            <Button type="submit">{createLoading? 'Creating..':'Create'}</Button>
+                            <Button type="submit">{createCommitteeLoading? 'Creating..':'Create'}</Button>
                         </Group>
                 </form>
             </Box>
         </SimpleModal>}
-
-        {type==='editUser' &&
-        <SimpleModal>
-            <UserEditModalBody user={user} />
-        </SimpleModal>
-        }
     </>
   )
 }

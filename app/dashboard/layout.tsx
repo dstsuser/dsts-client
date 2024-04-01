@@ -1,5 +1,5 @@
 "use client"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Group, Code } from '@mantine/core';
 import {
   IconBellRinging,
@@ -15,32 +15,37 @@ import {
 } from '@tabler/icons-react';
 import { MantineLogo } from '@mantinex/mantine-logo';
 import classes from './DashboardLayout.module.css';
-import { useRouter } from 'next/navigation';
-
+import { useRouter,usePathname } from 'next/navigation';
 const data = [
-  { link: '', label: 'Profile', icon: IconBellRinging, access:'USER' },
-  { link: '', label: 'Billing', icon: IconReceipt2, access:'USER'},
-  { link: '', label: 'Security', icon: IconFingerprint, access:'USER'},
-  { link: '', label: 'SSH Keys', icon: IconKey },
-  { link: 'users', label: 'Users', icon: IconUsersGroup, access:'ADMIN' },
-  { link: '', label: 'Authentication', icon: Icon2fa },
-  { link: '', label: 'Other Settings', icon: IconSettings },
+  // { link: '', label: 'Profile', icon: IconBellRinging, access:'USER' },
+  // { link: '', label: 'Billing', icon: IconReceipt2, access:'USER'},
+  // { link: '', label: 'Security', icon: IconFingerprint, access:'USER'},
+  // { link: '', label: 'SSH Keys', icon: IconKey },
+  { link: '/dashboard/users', label: 'Users', icon: IconUsersGroup, access:'ADMIN' },
+  { link: '/dashboard/committees', label: 'Committees', icon: Icon2fa },
+  { link: '/dashboard/positions', label: 'Positions', icon: IconSettings },
 ];
 
 export default function NavbarSimple({children}:{children:any}) {
-  const [active, setActive] = useState('Billing');
+  const [active, setActive] = useState('');
   const router = useRouter()
+  const pathname = usePathname()
+
+  useEffect(()=>{
+    const path = pathname.split('/')[2]
+    console.log(path)
+    setActive(path)
+  },[pathname])
 
   const links = data.map((item) => (
     <a
       className={classes.link}
-      data-active={item.label === active || undefined}
+      data-active={item?.label?.toLocaleLowerCase() === active || undefined}
       href={item.link}
       key={item.label}
       onClick={(event) => {
         event.preventDefault();
         router.push(item.link);
-        setActive(item.label);
       }}
     >
       <item.icon className={classes.linkIcon} stroke={1.5} />
