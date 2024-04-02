@@ -87,7 +87,7 @@ export default function Users() {
               </Group>
             </Table.Td>
             <Table.Td>{item.primaryPhone}</Table.Td>
-            <Table.Td>{item.roles?.map((item:any)=>`${item}, `)}</Table.Td>
+            <Table.Td>{item.roles?.map((item:any)=>`${item} `)}</Table.Td>
             <Table.Td>{item.status}</Table.Td>
             <Table.Td>{item.isAlumni?'Yes':'No'}</Table.Td>
             <Table.Td>

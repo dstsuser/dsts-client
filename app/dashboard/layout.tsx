@@ -21,6 +21,7 @@ import { useRouter,usePathname } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { userLoggedOut } from '@/lib/redux/features/auth/authSlice';
 import useAuth from '@/hooks/useAuth';
+import { Header } from '@/components/Header/Header';
 const data = [
   // { link: '', label: 'Profile', icon: IconBellRinging, access:'USER' },
   // { link: '', label: 'Billing', icon: IconReceipt2, access:'USER'},
@@ -72,22 +73,26 @@ export default function NavbarSimple({children}:{children:any}) {
   ));
 
   return (
-    <div style={{display:'flex'}}>
-        <nav className={classes.navbar}>
-            <div className={classes.navbarMain}>
-                {links}
-            </div>
+    <div className={classes.wrapper}>
+      <Header/>
+      <div style={{display:'flex',height:'92vh'}} >
+          <nav className={classes.navbar}>
+              <div className={classes.navbarMain}>
+                  {links}
+              </div>
 
-            <div className={classes.footer}>
-                <a style={{cursor:'pointer'}} className={classes.link} onClick={(e) =>handleLogout(e)}>
-                <IconLogout className={classes.linkIcon} stroke={1.5} />
-                <span>Logout</span>
-                </a>
-            </div>
-        </nav>
-        <div style={{width:'100%',overflowY:'auto'}}>
-            {children}
-        </div>
+              <div className={classes.footer}>
+                  <a style={{cursor:'pointer'}} className={classes.link} onClick={(e) =>handleLogout(e)}>
+                  <IconLogout className={classes.linkIcon} stroke={1.5} />
+                  <span>Logout</span>
+                  </a>
+              </div>
+          </nav>
+          <div style={{width:'100%',overflowY:'auto'}}>
+              {children}
+          </div>
+      </div>
+    
     </div>
   );
 }

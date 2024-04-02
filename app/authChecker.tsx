@@ -17,11 +17,11 @@ function AuthChecker ({ children }:{children: ReactNode}){
    return !authCheck? <div>Loading...</div>
    :
    <>
-         {/* {(pathname==='/' || pathname==="/home") &&  <HeaderBanner/>} */}
-         {pathname==="/" || pathname==="/home" ? <HeaderComponent/> : <Header/>}
-         {/* <HeaderComponent/> */}
+         {pathname.split('/')[1]==="dashboard" ? null: pathname==="/" || pathname==="/home" ? <HeaderComponent/> : <Header/>}
+         {/* {pathname==="/" || pathname==="/home" ? <HeaderComponent/> : <Header/>} */}
          {children}
-         <Footer/>
+         {pathname.split('/')[1]==="dashboard" ? null: <Footer/>}
+         
    </>
 }
 export default AuthChecker

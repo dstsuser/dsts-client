@@ -1,3 +1,7 @@
+.wrapper{
+  height: 100vh;
+}
+
 .navbar {
     height: 92vh;
     width: rem(300px);

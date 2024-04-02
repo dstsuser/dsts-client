@@ -19,6 +19,7 @@ import {
     rem,
     useMantineTheme,
     Table,
+    Image,
   } from '@mantine/core';
   import { MantineLogo } from '@mantinex/mantine-logo';
   import { useDisclosure } from '@mantine/hooks';
@@ -41,6 +42,9 @@ import useAuth from '@/hooks/useAuth';
 import { UserMenu } from '../UserMenu/UserMenu';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import logo from '../../assets/images/logo.png'
+import NextImage from 'next/image';
+
 
   const mockdata = [
     {
@@ -129,9 +133,10 @@ export function Header() {
             {/* <MantineLogo size={30} /> */}
             <div>
               <Link href="/" style={{textDecoration:'none'}}>
-                <Text inherit variant="gradient" component="span" gradient={{ from: 'pink', to: 'yellow' }} style={{fontSize:'28px',fontWeight:'700',textDecoration:'none'}}>
+                {/* <Text inherit variant="gradient" component="span" gradient={{ from: 'pink', to: 'yellow' }} style={{fontSize:'28px',fontWeight:'700',textDecoration:'none'}}>
                   DSTS
-                </Text>
+                </Text> */}
+                <Image component={NextImage} style={{height:'50px',width:'50px'}} height={1000} width={1000} src={logo} alt="dsts logo" />
               </Link>
             </div>
             <Group h="100%" gap={0} visibleFrom="sm">
