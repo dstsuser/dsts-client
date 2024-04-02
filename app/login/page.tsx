@@ -101,7 +101,7 @@ import useAuth from '@/hooks/useAuth';
             </Anchor>
           </Group>
           <Button fullWidth mt="xl" type='submit'>
-            Sign in
+            {isLoading?'Loading...':'Sign in'}
           </Button>
           </form>
         </Paper>
