@@ -40,6 +40,7 @@ import { useGetCommitteeListQuery } from '@/lib/redux/features/committee/committ
 import useAuth from '@/hooks/useAuth';
 import { UserMenu } from '../UserMenu/UserMenu';
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 
   const mockdata = [
     {
@@ -67,6 +68,25 @@ export function Header() {
     const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
     const theme = useMantineTheme();
     const dispatch = useDispatch()
+    const [isSticky, setSticky] = useState(false);
+
+
+    useEffect(() => {
+      const handleScroll = () => {
+        if (window.scrollY > 750) {
+          setSticky(true);
+        } else {
+          setSticky(false);
+        }
+      };
+  
+      window.addEventListener('scroll', handleScroll);
+  
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
+    }, []);
+
     const links = mockdata.map((item) => (
       <UnstyledButton className={classes.subLink} key={item.title}>
         <Group wrap="nowrap" align="flex-start">
@@ -103,12 +123,19 @@ export function Header() {
 
 
     return (
-      <Box>
+      <Box className={isSticky ? classes.sticky : ''}>
         <header className={classes.header}>
           <Group justify="space-between" h="100%">
-            <MantineLogo size={30} />
+            {/* <MantineLogo size={30} /> */}
+            <div>
+              <Link href="/" style={{textDecoration:'none'}}>
+                <Text inherit variant="gradient" component="span" gradient={{ from: 'pink', to: 'yellow' }} style={{fontSize:'28px',fontWeight:'700',textDecoration:'none'}}>
+                  DSTS
+                </Text>
+              </Link>
+            </div>
             <Group h="100%" gap={0} visibleFrom="sm">
-              <Link href="/" className={classes.link}>
+              <Link href="/" className={classes.link} >
                 Home
               </Link>
               <HoverCard width={600} position="bottom" radius="md" shadow="md" withinPortal>

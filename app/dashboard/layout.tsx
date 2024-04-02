@@ -12,30 +12,48 @@ import {
   IconSwitchHorizontal,
   IconUsersGroup,
   IconLogout,
+  IconUserPlus,
+  IconUserCode,
 } from '@tabler/icons-react';
 import { MantineLogo } from '@mantinex/mantine-logo';
 import classes from './DashboardLayout.module.css';
 import { useRouter,usePathname } from 'next/navigation';
+import { useDispatch } from 'react-redux';
+import { userLoggedOut } from '@/lib/redux/features/auth/authSlice';
+import useAuth from '@/hooks/useAuth';
 const data = [
   // { link: '', label: 'Profile', icon: IconBellRinging, access:'USER' },
   // { link: '', label: 'Billing', icon: IconReceipt2, access:'USER'},
   // { link: '', label: 'Security', icon: IconFingerprint, access:'USER'},
   // { link: '', label: 'SSH Keys', icon: IconKey },
   { link: '/dashboard/users', label: 'Users', icon: IconUsersGroup, access:'ADMIN' },
-  { link: '/dashboard/committees', label: 'Committees', icon: Icon2fa },
-  { link: '/dashboard/positions', label: 'Positions', icon: IconSettings },
+  { link: '/dashboard/committees', label: 'Committees', icon: IconUsersGroup },
+  { link: '/dashboard/positions', label: 'Positions', icon: IconUserCode },
 ];
 
 export default function NavbarSimple({children}:{children:any}) {
   const [active, setActive] = useState('');
   const router = useRouter()
   const pathname = usePathname()
+  const dispatch = useDispatch()
+  const auth = useAuth()
+
+  useEffect(()=>{
+    if(!auth){
+      router.push('/login')
+    }
+  },[auth])
 
   useEffect(()=>{
     const path = pathname.split('/')[2]
     console.log(path)
     setActive(path)
   },[pathname])
+
+  const handleLogout = (e:any) => {
+    e.preventDefault()
+    dispatch(userLoggedOut())
+  }
 
   const links = data.map((item) => (
     <a
@@ -61,18 +79,13 @@ export default function NavbarSimple({children}:{children:any}) {
             </div>
 
             <div className={classes.footer}>
-                <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
-                <IconSwitchHorizontal className={classes.linkIcon} stroke={1.5} />
-                <span>Change account</span>
-                </a>
-
-                <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
+                <a style={{cursor:'pointer'}} className={classes.link} onClick={(e) =>handleLogout(e)}>
                 <IconLogout className={classes.linkIcon} stroke={1.5} />
                 <span>Logout</span>
                 </a>
             </div>
         </nav>
-        <div style={{width:'100%'}}>
+        <div style={{width:'100%',overflowY:'auto'}}>
             {children}
         </div>
     </div>
