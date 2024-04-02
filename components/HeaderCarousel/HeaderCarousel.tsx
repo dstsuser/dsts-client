@@ -6,7 +6,8 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "swiper/css/effect-fade";
 
-import './HeaderCarousel.css'
+import '@/components/HeaderCarousel/HeaderCarousel.css'
+
 
 import classes from './HeaderCarousel.module.css'
 import HeaderBanner from "../HeaderBanner/HeaderBanner";
@@ -23,6 +24,7 @@ function HeaderCarousel() {
         mousewheel={true}
         modules={[Autoplay, Navigation, Pagination,EffectFade]}
         effect="fade"
+        // className={`${`classes.swiper-button-prev`} ${`classes.swiper-button-next`}`}
         
         // style={{ '--swiper-navigation-color': 'red' }}
       >

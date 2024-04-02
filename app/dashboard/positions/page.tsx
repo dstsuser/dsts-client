@@ -28,7 +28,7 @@ export default function Positions() {
     }
 
     const handleCreatePosition = async (values:any)=>{
-        createCommitteePosition({title:values.title})
+        createCommitteePosition({title:values.title,slug:values.slug})
         .unwrap()
         .then((data)=>{
             notifications.show({
@@ -37,6 +37,8 @@ export default function Positions() {
             })
             dispatch(closeModal())
             refetch()
+            form.values.title=''
+            form.values.slug=''
         })
         .catch((error)=>{
             notifications.show({
@@ -66,7 +68,7 @@ export default function Positions() {
     }else if(isError){
         tableContent=<div>Error</div>
     }else if(data?.committeePositions.length===0){
-        tableContent=<div>No User Found</div>
+        tableContent=<div>No Position Found</div>
     }else if(data?.committeePositions.length>0){
         tableContent=<Table miw={800} verticalSpacing="sm">
         <Table.Thead>
@@ -103,6 +105,13 @@ export default function Positions() {
                             label="Position Name"
                             placeholder="Name"
                             {...form.getInputProps('title')}
+                        />
+                        <TextInput
+                            mb={'sm'}
+                            withAsterisk
+                            label="Position Slug"
+                            placeholder="general-secretary"
+                            {...form.getInputProps('slug')}
                         />
                         <Group justify="flex-end" mt="md">
                             <Button type="submit">{createLoading? 'Creating..':'Create'}</Button>
