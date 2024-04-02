@@ -1,0 +1,21 @@
+
+.headerTextOne {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.indicator {
+  width: rem(12px);
+  height: rem(4px);
+  transition: width 250ms ease;
+
+  &[data-active] {
+    width: rem(40px);
+  }
+}
+
+.swiper-button-prev{
+  color: #fff;
+}

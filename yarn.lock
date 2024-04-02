@@ -12112,6 +12112,7 @@ __metadata:
     storybook-dark-mode: "npm:^3.0.3"
     stylelint: "npm:^16.2.1"
     stylelint-config-standard-scss: "npm:^13.0.0"
+    swiper: "npm:^11.1.0"
     ts-jest: "npm:^29.1.2"
     typescript: "npm:5.4.2"
   languageName: unknown
@@ -15595,6 +15596,13 @@ __metadata:
   version: 1.0.0
   resolution: "svg-tags@npm:1.0.0"
   checksum: 10c0/5867e29e8f431bf7aecf5a244d1af5725f80a1086187dbc78f26d8433b5e96b8fe9361aeb10d1699ff483b9afec785a10916b9312fe9d734d1a7afd48226c954
+  languageName: node
+  linkType: hard
+
+"swiper@npm:^11.1.0":
+  version: 11.1.0
+  resolution: "swiper@npm:11.1.0"
+  checksum: 10c0/dd144b3580146508f01b551ce4c5895d2d7f4fa49dd98f361ba549dcca17f440eff603669a5416f98d21ac9ce828c11c5eed966a96434b3fda101bc332714992
   languageName: node
   linkType: hard
 

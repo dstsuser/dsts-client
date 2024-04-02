@@ -13,10 +13,11 @@ export default function HomePage() {
   return (
     <>
       <Container px={0} size="xl">
-        <HeroImage/>
+        {/* <HeroImage/> */}
+        <Welcome />
         <BriefAndNotice/>
         <HomeCarousel />
-        <Welcome />
+       
         <ColorSchemeToggle />
         <PhotoGrid/>
         <Container size="md">

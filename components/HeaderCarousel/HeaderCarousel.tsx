@@ -1,40 +1,62 @@
-import { useRef } from 'react';
-import Autoplay from 'embla-carousel-autoplay';
-import { Carousel } from '@mantine/carousel';
-import HeaderBanner from '../HeaderBanner/HeaderBanner';
-import { BackgroundImage, Center, Text } from '@mantine/core';
+import { Autoplay, EffectFade, Navigation, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
+import "swiper/css/effect-fade";
+
+import './HeaderCarousel.css'
+
+import classes from './HeaderCarousel.module.css'
+import HeaderBanner from "../HeaderBanner/HeaderBanner";
 
 function HeaderCarousel() {
-  const autoplay = useRef(Autoplay({ delay: 2000 }));
+
   return (
-    <Carousel
-      withIndicators
-    //   height={200}
-      plugins={[autoplay.current]}
-      onMouseEnter={autoplay.current.stop}
-      onMouseLeave={autoplay.current.reset}
-    //   style={{position:'absolute'}}
-    >
-      <Carousel.Slide>
-      <BackgroundImage
-      src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-6.png"
-      style={{ height: '92vh',backgroundRepeat:'no-repeat',backgroundAttachment:'fixed' }}
-    >
-      <Center p="md">
-        <Text c="white">
-          BackgroundImage component can be used to add any content on image. It is useful for hero
-          headers and other similar sections
-        </Text>
-      </Center>
-    </BackgroundImage>
-      </Carousel.Slide>
-      <Carousel.Slide>
-        <HeaderBanner/>
-      </Carousel.Slide>
-      <Carousel.Slide>
-        <HeaderBanner/>
-      </Carousel.Slide>
-    </Carousel>
+    <section>
+      <Swiper
+        navigation
+        pagination={{type:'progressbar',clickable:true,dynamicBullets:true}}
+        autoplay={{delay: 5000}}
+        loop={true}
+        mousewheel={true}
+        modules={[Autoplay, Navigation, Pagination,EffectFade]}
+        effect="fade"
+        
+        // style={{ '--swiper-navigation-color': 'red' }}
+      >
+        {data.map((item, index) => (
+          <SwiperSlide key={index}>
+            <HeaderBanner data={item} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </section>
   );
 }
 export default HeaderCarousel;
+
+const data = [
+  {
+    image: 'https://source.unsplash.com/random/800x600',
+    title: 'Hello',
+    subtitle: 'Lorem ipsum dolor sit amet.',
+    buttonText: 'Learn More',
+    buttonLink: '#'
+  },
+  {
+    image: 'https://source.unsplash.com/random/800x600',
+    title: 'Hello',
+    subtitle: 'Lorem ipsum dolor sit amet.',
+    buttonText: 'Learn More',
+    buttonLink: '#'
+  },
+  {
+    image: 'https://source.unsplash.com/random/800x600',
+    title: 'Hello',
+    subtitle: 'Lorem ipsum dolor sit amet.',
+    buttonText: 'Learn More',
+    buttonLink: '#'
+  },
+]
