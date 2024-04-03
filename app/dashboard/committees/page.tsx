@@ -3,7 +3,7 @@ import SimpleModal from '@/components/Modals/SimpleModal';
 import UserEditModalBody from '@/components/Modals/UserEditModalBody';
 import { useCreateCommitteeMutation, useCreateCommitteePositionMutation, useGetCommitteeListQuery } from '@/lib/redux/features/committee/committeeApi';
 import { closeModal, openModal } from '@/lib/redux/features/modal/modalSlice';
-import { Box, Button, Container, Grid, Group, Table, Text, TextInput, Textarea } from '@mantine/core';
+import { Box, Button, Container, Grid, Group, Select, Table, Text, TextInput, Textarea } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
@@ -22,10 +22,17 @@ export default function Committees() {
     const {type} = useSelector((state:any) => state.modal);
     const form = useForm();
     const router = useRouter()
+    const [committeeType, setCommitteeType] = useState('');
 
 
     const handleCreateCommittee = async (values:any)=>{
-        createCommittee(values)
+        createCommittee({
+            name:values.name,
+            year:values.year,
+            formingDate:values.formingDate,
+            description:values.description,
+            type:committeeType
+        })
         .unwrap()
         .then((data)=>{
             notifications.show({
@@ -106,13 +113,28 @@ export default function Committees() {
         <SimpleModal>
             <Box mx="auto">
                 <form onSubmit={form.onSubmit((values) => handleCreateCommittee(values))}>
-                        <TextInput
-                            mb={'sm'}
-                            withAsterisk
-                            label="Committee Name"
-                            placeholder="Name"
-                            {...form.getInputProps('name')}
-                        />
+                        
+                        <Grid mb={'sm'}>
+                            <Grid.Col span={{ base: 12, md: 6 }}>
+                                <TextInput
+                                    mb={'sm'}
+                                    withAsterisk
+                                    label="Committee Name"
+                                    placeholder="Name"
+                                    {...form.getInputProps('name')}
+                                />
+                            </Grid.Col>
+                            <Grid.Col span={{ base: 12, md: 6 }}>
+                                <Select
+                                    mb={'md'}
+                                    label="Committee Type"
+                                    placeholder="Type"
+                                    data={['RUNNING', 'FOUNDING','FORMER']}
+                                    searchable
+                                    onSearchChange={setCommitteeType}
+                                />
+                            </Grid.Col>
+                        </Grid>
                         <Grid mb={'sm'}>
                             <Grid.Col span={{ base: 12, md: 6 }}>
                                 <TextInput

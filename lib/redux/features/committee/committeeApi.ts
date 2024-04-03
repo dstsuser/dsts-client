@@ -15,6 +15,12 @@ export const authApi = apiSlice.injectEndpoints({
                 method:'GET'
             }),
         }),
+        getCommitteeByProperty: builder.query({
+            query : ({key,value})=>({
+                url:`/committee/${key}/${value}`,
+                method:'GET'
+            }),
+        }),
         createCommittee: builder.mutation({
             query : (data)=>({
                 url:'/committee',
@@ -45,4 +51,4 @@ export const authApi = apiSlice.injectEndpoints({
     })
 })
 
-export const {useGetCommitteeListQuery, useAddMemberToCommitteeMutation, useCreateCommitteeMutation, useCreateCommitteePositionMutation, useGetCommitteePositionsQuery, useGetCommitteeByIdQuery } = authApi
+export const {useGetCommitteeListQuery, useAddMemberToCommitteeMutation, useCreateCommitteeMutation, useCreateCommitteePositionMutation, useGetCommitteePositionsQuery, useGetCommitteeByIdQuery, useGetCommitteeByPropertyQuery } = authApi

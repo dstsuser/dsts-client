@@ -74,6 +74,8 @@ export function Header() {
     const dispatch = useDispatch()
     const [isSticky, setSticky] = useState(false);
 
+    console.log(data)
+
 
     useEffect(() => {
       const handleScroll = () => {
@@ -91,18 +93,24 @@ export function Header() {
       };
     }, []);
 
-    const links = mockdata.map((item) => (
-      <UnstyledButton className={classes.subLink} key={item.title}>
+    const handleNavigateToCommittee = (item:any)=>{
+      console.log('slug',item)
+      router.push(`/committees/${item.slug}`)
+    }
+
+    function capitalizeFirstLetter(str:string) {
+      return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    }
+
+    const links = data?.committee?.map((item:any) => (
+      <UnstyledButton mb={'xs'} onClick={()=>handleNavigateToCommittee(item)} className={classes.subLink} key={item.title}>
         <Group wrap="nowrap" align="flex-start">
-          <ThemeIcon size={34} variant="default" radius="md">
-            <item.icon style={{ width: rem(22), height: rem(22) }} color={theme.colors.blue[6]} />
-          </ThemeIcon>
           <div>
             <Text size="sm" fw={500}>
-              {item.title}
+              {`${capitalizeFirstLetter(item?.type)} Committee`}
             </Text>
             <Text size="xs" c="dimmed">
-              {item.description}
+              {item.formingDate}
             </Text>
           </div>
         </Group>
@@ -130,12 +138,8 @@ export function Header() {
       <Box className={isSticky ? classes.sticky : ''}>
         <header className={classes.header}>
           <Group justify="space-between" h="100%">
-            {/* <MantineLogo size={30} /> */}
             <div>
               <Link href="/" style={{textDecoration:'none'}}>
-                {/* <Text inherit variant="gradient" component="span" gradient={{ from: 'pink', to: 'yellow' }} style={{fontSize:'28px',fontWeight:'700',textDecoration:'none'}}>
-                  DSTS
-                </Text> */}
                 <Image component={NextImage} style={{height:'50px',width:'50px'}} height={1000} width={1000} src={logo} alt="dsts logo" />
               </Link>
             </div>
@@ -143,7 +147,7 @@ export function Header() {
               <Link href="/" className={classes.link} >
                 Home
               </Link>
-              <HoverCard width={600} position="bottom" radius="md" shadow="md" withinPortal>
+              <HoverCard  position="bottom" radius="md" shadow="md" withinPortal>
                 <HoverCard.Target>
                   <a href="#" className={classes.link}>
                     <Center inline>
@@ -158,19 +162,19 @@ export function Header() {
                   </a>
                 </HoverCard.Target>
                 <HoverCard.Dropdown style={{ overflow: 'hidden' }}>
-                  <Group justify="space-between" px="md">
+                  {/* <Group justify="space-between" px="md">
                     <Text fw={500}>Features</Text>
                     <Anchor href="#" fz="xs">
                       View all
                     </Anchor>
-                  </Group>
-                  <Divider my="sm" />
+                  </Group> */}
+                  {/* <Divider my="sm" /> */}
 
-                  <SimpleGrid cols={3} spacing={0}>
+                  <SimpleGrid cols={1} spacing={0}>
                     {links}
                   </SimpleGrid>
 
-                  <div className={classes.dropdownFooter}>
+                  {/* <div className={classes.dropdownFooter}>
                     <div>
                       {
                         data?.committee?.map((item:any)=>{
@@ -182,7 +186,7 @@ export function Header() {
                         })
                       }
                     </div>
-                  </div>
+                  </div> */}
                 </HoverCard.Dropdown>
               </HoverCard>
               <a href="#" className={classes.link}>
