@@ -6,8 +6,6 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "swiper/css/effect-fade";
 
-import '@/components/HeaderCarousel/HeaderCarousel.css'
-
 
 import classes from './HeaderCarousel.module.css'
 import HeaderBanner from "../HeaderBanner/HeaderBanner";

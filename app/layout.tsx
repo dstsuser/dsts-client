@@ -9,6 +9,7 @@ import { Footer } from '@/components/Footer/Footer';
 import AuthChecker from './authChecker';
 import { Providers } from '@/lib/provider';
 import { Notifications } from '@mantine/notifications';
+import './global.css';
 
 export const metadata = {
   title: 'Mantine Next.js template',
