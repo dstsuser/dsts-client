@@ -29,12 +29,12 @@ import useAuth from '@/hooks/useAuth';
 
     const form = useForm({
       initialValues: {
-        phone: '',
+        emailOrPhone: '',
         password: '',
         rememberMe: false,
       },
       validate: {
-        phone: (value) => (value.length === 11 ? null : 'Phone number must be 11 characters'),
+        emailOrPhone: (value) => (value.length >= 11 ? null : 'Phone number must be 11 characters'),
         password: (value) => {
           const hasUpperCase = /[A-Z]/.test(value);
           const hasNumber = /\d/.test(value);
@@ -54,7 +54,7 @@ import useAuth from '@/hooks/useAuth';
     },[auth])
 
     const handleSubmit = (values:any) => {
-      login({primaryPhone:values.phone,password:values.password})
+      login({emailOrPhone:values.emailOrPhone,password:values.password})
       .unwrap().then((data)=>{
         if(data.token){
           if(window.history.length>0){
@@ -72,7 +72,7 @@ import useAuth from '@/hooks/useAuth';
         </Title>
         <Text c="dimmed" size="sm" ta="center" mt={5}>
           Do not have an account yet?{' '}
-          <Anchor size="sm" component="button">
+          <Anchor size="sm" component="button" onClick={()=>router.push('/register')}>
             Create account
           </Anchor>
         </Text>
@@ -81,9 +81,9 @@ import useAuth from '@/hooks/useAuth';
 
         <form onSubmit={form.onSubmit((values) =>handleSubmit(values))}>
           <TextInput 
-              label="Phone" 
-              placeholder="Ex 017XXXXXXXX"
-              {...form.getInputProps('phone')}
+              label="Email or Phone" 
+              placeholder="Your email or phone number"
+              {...form.getInputProps('emailOrPhone')}
               required 
           />
           <PasswordInput 

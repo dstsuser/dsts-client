@@ -7,24 +7,18 @@ import { BriefAndNotice } from '@/components/BriefAndNotice/BriefAndNotice';
 import { HeroImage } from '@/components/HeroImage/HeroImage';
 import { PhotoGrid } from '@/components/PhotoGrid/PhotoGrid';
 import { GetInTouch } from '@/components/Contact/GetInTouch';
+import AboutAndGoal from '@/components/AboutAndGoal/AboutAndGoal';
 
 
 export default function HomePage() {
   return (
     <>
-      <Container px={0} size="xl">
-        {/* <HeroImage/> */}
-        <Welcome />
+        <AboutAndGoal/>
         <BriefAndNotice/>
         <HomeCarousel />
-       
         <ColorSchemeToggle />
         <PhotoGrid/>
-        <Container size="md">
         <GetInTouch/>
-        </Container>
-        
-      </Container>
     </>
   );
 }
