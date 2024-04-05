@@ -67,7 +67,7 @@ import useAuth from '@/hooks/useAuth';
           router.push('/')
         }
       }).catch((error)=>{
-        setError(error)
+        setError(error?.data?.message)
       })
     }
 
@@ -87,7 +87,7 @@ import useAuth from '@/hooks/useAuth';
 
           {isError &&
             <Alert variant="light" color="orange" my={'md'}>
-              { error?.data?.message}
+              { error}
           </Alert>}
 
         <form onSubmit={form.onSubmit((values) =>handleSubmit(values))}>
