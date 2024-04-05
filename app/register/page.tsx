@@ -80,12 +80,12 @@ import useAuth from '@/hooks/useAuth';
     return (
       <Container size={420} my={40}>
         <Title ta="center" className={classes.title}>
-          Welcome back!
+          Welcome to DSTS Association!
         </Title>
         <Text c="dimmed" size="sm" ta="center" mt={5}>
-          Do not have an account yet?{' '}
-          <Anchor size="sm" component="button">
-            Create account
+          Already have an account?{' '}
+          <Anchor size="sm" component="button" style={{cursor:'pointer'}} onClick={()=>router.push('/login')}>
+            Sign In
           </Anchor>
         </Text>
 
@@ -118,14 +118,14 @@ import useAuth from '@/hooks/useAuth';
               {...form.getInputProps('password')}
               required mt="md" 
           />
-          <Group justify="space-between" mt="lg">
+          {/* <Group justify="space-between" mt="lg">
             <Checkbox label="Remember me" 
                  {...form.getInputProps('rememberMe', { type: 'checkbox' })}
             />
             <Anchor component="button" size="sm">
               Forgot password?
             </Anchor>
-          </Group>
+          </Group> */}
           <Button fullWidth mt="xl" type='submit'>
             {isLoading?'Loading...':'Sign up'}
           </Button>

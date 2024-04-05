@@ -1,5 +1,10 @@
+.mainWrapper{
+  /* background-color:"#F6F6F6"; */
+  padding: 100px 0px;
+}
+
 .card {
-    height: rem(440px);
+    height: rem(360px);
     display: flex;
     flex-direction: column;
     justify-content: space-between;

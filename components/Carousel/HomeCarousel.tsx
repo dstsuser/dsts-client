@@ -1,10 +1,13 @@
 'use client'
-import { Carousel } from '@mantine/carousel';
 import { useMediaQuery } from '@mantine/hooks';
-import { Button, Paper, Title, useMantineTheme, Text } from '@mantine/core';
-import Autoplay from 'embla-carousel-autoplay';
+import { Button, Paper, Title, useMantineTheme, Text, Container } from '@mantine/core';
+
 import classes from './HomeCarousel.module.css';
 import { useRef } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import { Pagination,Autoplay,Mousewheel } from 'swiper/modules';
 
 
 
@@ -78,30 +81,42 @@ function Card({ image, title, category }: CardProps) {
 }
 
 function HomeCarousel() {
-  const theme = useMantineTheme();
-  const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
-  const slides = data.map((item) => (
-    <Carousel.Slide key={item.title}>
-      <Card {...item} />
-    </Carousel.Slide>
-  ));
-
-  const autoplay = useRef(Autoplay({ delay: 2000 }));
-
 
   return (
-    <Carousel
-      slideSize={{ base: '100%', sm: '50%' }}
-      slideGap={{ base: 'xl', sm: 2 }}
-      align="start"
-      slidesToScroll={mobile ? 1 : 2}
-      plugins={[autoplay.current]}
-      onMouseEnter={autoplay.current.stop}
-      onMouseLeave={autoplay.current.reset}
-    
-    >
-      {slides}
-    </Carousel>
+    <div className={classes.mainWrapper} style={{backgroundColor:'#F6F6F6'}}>
+      <Container size="lg" >
+          <Swiper 
+          modules={[Pagination,Autoplay,Mousewheel]}
+          breakpoints={{
+            640: {
+              slidesPerView: 1,
+              spaceBetween: 20,
+            },
+            768: {
+              slidesPerView: 2,
+              spaceBetween: 40,
+            },
+            1024: {
+              slidesPerView: 3,
+              spaceBetween: 50,
+            },
+          }}
+          pagination={{ clickable: true }}
+          autoplay={{ delay: 3000 }}
+          mousewheel={true}
+
+          className={classes.swiper}
+          
+          
+          >
+            {data.map((item) => (
+              <SwiperSlide key={item.title}>
+                <Card {...item} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+      </Container>
+    </div>
   );
 }
 

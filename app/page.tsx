@@ -8,17 +8,20 @@ import { HeroImage } from '@/components/HeroImage/HeroImage';
 import { PhotoGrid } from '@/components/PhotoGrid/PhotoGrid';
 import { GetInTouch } from '@/components/Contact/GetInTouch';
 import AboutAndGoal from '@/components/AboutAndGoal/AboutAndGoal';
+import AboutUs from '@/components/AboutAndGoal/About';
+import Goal from '@/components/AboutAndGoal/Goal';
+import { ContactUs } from '@/components/ContactUs/ContactUs';
 
 
 export default function HomePage() {
   return (
     <>
-        <AboutAndGoal/>
         <BriefAndNotice/>
-        <HomeCarousel />
-        <ColorSchemeToggle />
+        <AboutUs/>
+        <Goal/>
         <PhotoGrid/>
-        <GetInTouch/>
+        <HomeCarousel/>
+        <ContactUs/>
     </>
   );
 }

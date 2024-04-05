@@ -10,6 +10,7 @@ import {
     Container,
     Group,
     Button,
+    Alert,
   } from '@mantine/core';
   import classes from './page.module.css';
 import { useEffect, useState } from 'react';
@@ -22,10 +23,12 @@ import useAuth from '@/hooks/useAuth';
   export default function Login() {
 
 
-    const [login,{isLoading,isError}] = useLoginMutation()
+    const [login,{isLoading,isError,error}] = useLoginMutation()
     const dispatch = useDispatch();
     const router = useRouter();
     const auth = useAuth();
+
+    console.log(error)
 
     const form = useForm({
       initialValues: {
@@ -78,6 +81,11 @@ import useAuth from '@/hooks/useAuth';
         </Text>
 
         <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+
+          {isError &&
+            <Alert variant="light" color="orange" my={'md'}>
+              { error?.data?.message}
+          </Alert>}
 
         <form onSubmit={form.onSubmit((values) =>handleSubmit(values))}>
           <TextInput 

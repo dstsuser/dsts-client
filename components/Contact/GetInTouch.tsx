@@ -1,50 +1,94 @@
-'use client';
-
-import { Paper, Text, TextInput, Textarea, Button, Group, SimpleGrid } from '@mantine/core';
-import bg from './bg.svg';
-import classes from './GetInTouch.module.css';
-import { ContactIconsList } from './ContactIcons';
+'use client'
+import { TextInput, Textarea, SimpleGrid, Group, Title, Button, Container, Grid, Text, Paper } from '@mantine/core';
+import { useForm } from '@mantine/form';
 
 export function GetInTouch() {
+  const form = useForm({
+    initialValues: {
+      name: '',
+      email: '',
+      subject: '',
+      message: '',
+    },
+    validate: {
+      name: (value) => value.trim().length < 2,
+      email: (value) => !/^\S+@\S+$/.test(value),
+      subject: (value) => value.trim().length === 0,
+    },
+  });
+
   return (
-    <Paper shadow="md" radius="lg">
-      <div className={classes.wrapper}>
-        <div className={classes.contacts} style={{ backgroundImage: `url(${bg.src})` }}>
-          <Text fz="lg" fw={700} className={classes.title} c="#fff">
-            Contact information
-          </Text>
-
-          <ContactIconsList />
-        </div>
-
-        <form className={classes.form} onSubmit={(event) => event.preventDefault()}>
-          <Text fz="lg" fw={700} className={classes.title}>
-            Get in touch
-          </Text>
-
-          <div className={classes.fields}>
-            <SimpleGrid cols={{ base: 1, sm: 2 }}>
-              <TextInput label="Your name" placeholder="Your name" />
-              <TextInput label="Your email" placeholder="hello@mantine.dev" required />
+    <div>
+      <Container size='lg'>
+        <Title
+              order={2}
+              size="h1"
+              style={{ fontFamily: 'Greycliff CF, var(--mantine-font-family)' }}
+              fw={900}
+              // ta="center"
+            >
+              Get in touch
+        </Title>
+        <Grid>
+          <Grid.Col span={{ base: 12, md: 8, lg: 8 }}>
+          <form onSubmit={form.onSubmit(() => {})}>
+          
+            <SimpleGrid cols={{ base: 1, sm: 2 }} mt="xl">
+              <TextInput
+                label="Name"
+                placeholder="Your name"
+                name="name"
+                variant="filled"
+                {...form.getInputProps('name')}
+              />
+              <TextInput
+                label="Email"
+                placeholder="Your email"
+                name="email"
+                variant="filled"
+                {...form.getInputProps('email')}
+              />
             </SimpleGrid>
 
-            <TextInput mt="md" label="Subject" placeholder="Subject" required />
-
+            <TextInput
+              label="Subject"
+              placeholder="Subject"
+              mt="md"
+              name="subject"
+              variant="filled"
+              {...form.getInputProps('subject')}
+            />
             <Textarea
               mt="md"
-              label="Your message"
-              placeholder="Please include all relevant information"
-              minRows={3}
+              label="Message"
+              placeholder="Your message"
+              maxRows={10}
+              minRows={5}
+              autosize
+              name="message"
+              variant="filled"
+              {...form.getInputProps('message')}
             />
 
-            <Group justify="flex-end" mt="md">
-              <Button type="submit" className={classes.control}>
+            <Group justify="start" mt="xl">
+              <Button type="submit" size="md">
                 Send message
               </Button>
             </Group>
-          </div>
-        </form>
-      </div>
-    </Paper>
+          </form>
+          </Grid.Col>
+          <Grid.Col span={{ base: 12, md: 4, lg: 4 }}>
+            <Paper  mt="xl">
+              <Text style={{ fontWeight: 700,fontSize:'24px' }}>Contact Info</Text>
+              <Text>1234 Main St</Text>
+              <Text>City, State, 12345</Text>
+              <Text>Country</Text>
+            </Paper>
+          </Grid.Col>
+        </Grid>
+      </Container>
+    </div>
   );
 }
+
+export default GetInTouch;

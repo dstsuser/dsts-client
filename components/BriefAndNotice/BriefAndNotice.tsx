@@ -8,7 +8,8 @@ export function BriefAndNotice() {
   const SECONDARY_COL_HEIGHT = `calc(${PRIMARY_COL_HEIGHT} / 2 - var(--mantine-spacing-md) / 2)`;
 
   return (
-    <Container my="md">
+    <div style={{backgroundColor:'#F6F6F6'}}>
+      <Container size='lg'>
       <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">
         <div style={{height:'400px'}}>
             <HomeNotice/>
@@ -18,5 +19,6 @@ export function BriefAndNotice() {
         </div>
       </SimpleGrid>
     </Container>
+    </div>
   );
 }

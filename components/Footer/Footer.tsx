@@ -27,9 +27,10 @@ export function Footer() {
   ));
 
   return (
-    <Container size="md">
+   
         <div className={classes.footer}>
-      <div className={classes.inner}>
+          <Container size="lg">
+          <div className={classes.inner}>
       <Image component={NextImage} style={{height:'50px',width:'50px'}} height={1000} width={1000} src={logo} alt="dsts logo" />
 
         <Group className={classes.links}>{items}</Group>
@@ -46,7 +47,8 @@ export function Footer() {
           </ActionIcon>
         </Group>
       </div>
+          </Container>
+      
     </div>
-    </Container>
   );
 }
