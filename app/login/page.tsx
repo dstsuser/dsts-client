@@ -23,7 +23,8 @@ import useAuth from '@/hooks/useAuth';
   export default function Login() {
 
 
-    const [login,{isLoading,isError,error}] = useLoginMutation()
+    const [login,{isLoading,isError}] = useLoginMutation();
+    const [error,setError] = useState('')
     const dispatch = useDispatch();
     const router = useRouter();
     const auth = useAuth();
@@ -65,6 +66,8 @@ import useAuth from '@/hooks/useAuth';
           }
           router.push('/')
         }
+      }).catch((error)=>{
+        setError(error)
       })
     }
 
