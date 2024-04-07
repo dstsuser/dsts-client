@@ -22,6 +22,7 @@ export default function UserEditModalBody({user,refetch}:{user:any,refetch:any})
             primaryPhone: user.primaryPhone || '',
             fullName: user.fullName || '',
             phone: user?.contactInfo?.phone || '',
+            bloodGroup: user?.bloodGroup || '',
             email: user?.contactInfo?.email || '',
             whatsapp: user?.socialMediaInfo?.whatsapp || '',
             facebook: user?.socialMediaInfo?.facebook || '',
@@ -148,9 +149,9 @@ export default function UserEditModalBody({user,refetch}:{user:any,refetch:any})
                         <Grid.Col span={{ base: 12, md: 6 }}>
                             <TextInput
                                 // withAsterisk
-                                label="Whatsapp Number"
-                                placeholder="017XXXXXXXX"
-                                {...form.getInputProps('whatsapp')}
+                                label="Blood Group"
+                                placeholder="A+"
+                                {...form.getInputProps('bloodGroup')}
                             />
                         </Grid.Col>
                         <Grid.Col span={{ base: 12, md: 6 }} style={{display:'flex',alignItems:'center'}}>
@@ -162,13 +163,26 @@ export default function UserEditModalBody({user,refetch}:{user:any,refetch:any})
                         </Grid.Col>
                     </Grid>
 
-                    <TextInput
-                        mb={'sm'}
-                        // withAsterisk
-                        label="Facebook Profile Url"
-                        placeholder="https://facebook.com/username"
-                        {...form.getInputProps('facebook')}
-                    />
+                    <Grid mb={'sm'}>
+                        <Grid.Col span={{ base: 12, md: 6 }}>
+                            <TextInput
+                                // withAsterisk
+                                label="Whatsapp Number"
+                                placeholder="017XXXXXXXX"
+                                {...form.getInputProps('whatsapp')}
+                            />
+                        </Grid.Col>
+                        <Grid.Col span={{ base: 12, md: 6 }}>
+                            <TextInput
+                                mb={'sm'}
+                                label="Facebook Profile Url"
+                                placeholder="https://facebook.com/username"
+                                {...form.getInputProps('facebook')}
+                            />
+                        </Grid.Col>
+                    </Grid>
+
+                    
 
                     <TextInput
                         mb={'sm'}

@@ -52,7 +52,7 @@ export default function page() {
                         <Grid>
                             <Grid.Col span={{base:12,md:6,lg:6}}>
                                 <Card withBorder className={classes.infoDiv}>
-                                    <Text fw={'bold'}>Contact Info</Text>
+                                    <Text fw={'bold'}>Information</Text>
                                     <div>
                                         <Table striped>
                                             <tbody>
@@ -65,6 +65,10 @@ export default function page() {
                                                     <td>Primary Phone</td>
                                                     <td>{data?.user?.primaryPhone? data?.user?.primaryPhone :'N/A'}</td>
                                                 </tr>
+                                                <tr>
+                                                    <td>Is Alumni?</td>
+                                                    <td>{data?.user?.isAlumni? 'Yes':'No'}</td>
+                                                </tr>
                                             </tbody>
                                         </Table>
                                     </div>
@@ -72,10 +76,16 @@ export default function page() {
                             </Grid.Col>
                             <Grid.Col span={{base:12,md:6,lg:6}}>
                                 <Card withBorder className={classes.infoDiv}>
-                                    <Text fw={'bold'}>Address</Text>
+                                    <Text fw={'bold'}>Information</Text>
                                     <div>
                                         <Table striped>
                                             <tbody>
+                                                <tr>
+                                                    <td>Blood Group</td>
+                                                    <td>{data?.user?.bloodGroup? 
+                                                        data?.user?.bloodGroup :'N/A'
+                                                    }</td>
+                                                </tr>
                                                 <tr>
                                                     <td>Present Address</td>
                                                     <td>{data?.user?.address?.presentAddress?
