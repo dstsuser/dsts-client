@@ -45,25 +45,7 @@ import { useEffect, useState } from 'react';
 import logo from '../../assets/images/logo.png'
 import NextImage from 'next/image';
 import { userLoggedOut } from '@/lib/redux/features/auth/authSlice';
-
-
-  const mockdata = [
-    {
-      icon: IconCode,
-      title: 'Running',
-      description: 'Formed in 18 July 2023',
-    },
-    {
-      icon: IconCoin,
-      title: 'Founding',
-      description: 'Founded in 12 July 2015',
-    },
-    {
-      icon: IconBook,
-      title: 'Former',
-      description: 'Total 12 Committees',
-    },
-  ];
+import useRoleAdmin from '@/hooks/useRoleAdmin';
 
 
 
@@ -74,8 +56,9 @@ export function Header() {
     const theme = useMantineTheme();
     const dispatch = useDispatch()
     const [isSticky, setSticky] = useState(false);
-
-    console.log(data)
+    const auth = useAuth();
+    const {user} = useSelector((state:any)=>state.auth);
+    const router = useRouter()
 
 
     useEffect(() => {
@@ -119,11 +102,7 @@ export function Header() {
     )
   );
 
-  const auth = useAuth();
-  const {user} = useSelector((state:any)=>state.auth);
-  console.log(user)
 
-  const router = useRouter()
 
   const handleLoggedOut = ()=>{
     
@@ -248,6 +227,18 @@ export function Header() {
                 <Link href="/dashboard" className={classes.link}>
                 Profile 
               </Link>
+              {useRoleAdmin() &&
+                <>
+                <Link href="/dashboard/users" className={classes.link}>
+                  Users 
+              </Link>
+                <Link href="/dashboard/committees" className={classes.link}>
+                  Committees
+              </Link>
+                <Link href="/dashboard/positions" className={classes.link}>
+                  Positions
+              </Link>
+              </>}
               <Link href='' className={classes.link} onClick={()=>handleLoggedOut()}>
                 Logout
               </Link>

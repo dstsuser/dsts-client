@@ -2,7 +2,7 @@
 import SimpleModal from '@/components/Modals/SimpleModal';
 import UserEditModalBody from '@/components/Modals/UserEditModalBody';
 import { closeModal, openModal } from '@/lib/redux/features/modal/modalSlice';
-import { useGetAllUsersQuery, usePostUserMutation, useUploadProfileImageMutation } from '@/lib/redux/features/user/userApi'
+import { useDeleteUserByIdMutation, useGetAllUsersQuery, usePostUserMutation, useUploadProfileImageMutation } from '@/lib/redux/features/user/userApi'
 import { Avatar, Box, Button, Checkbox, Container, FileInput, Grid, Group, Table, Text, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
@@ -16,6 +16,7 @@ export default function Users() {
     const {data,isLoading,isError,refetch} = useGetAllUsersQuery('user')
     const [postUser] = usePostUserMutation()
     const [uploadProfileImage,{isLoading:avatarUploading}] = useUploadProfileImageMutation()
+    const [deleteUserById,{isLoading:isDeleteLoading,isError:isDeleteError}] = useDeleteUserByIdMutation()
     const dispatch = useDispatch();
     const [value, setValue] = useState<File | null>(null);
     const [user, setUser] = useState({} as any);
@@ -36,6 +37,28 @@ export default function Users() {
             console.log(err)
         })
     }
+
+    const handleUserDelete = (id:any)=>{
+        deleteUserById(id)
+        .unwrap()
+        .then((res)=>{
+            if(res){
+                refetch()
+                notifications.show({
+                    title: 'Success 🎉',
+                    message: 'User deleted successfully !',
+                  })
+            }
+        })
+        .catch((err)=>{
+            console.log(err)
+            notifications.show({
+                title: 'Error',
+                message: 'Failed to delete user !',
+              })
+        })
+    }
+
 
     const handleUploadImage = (values:any)=>{
         const form = new FormData();
@@ -93,7 +116,11 @@ export default function Users() {
             <Table.Td>
                 <Group>
                     <Button size='xs' variant='transparent' onClick={()=>{openEditModal(item)}}><IconEdit fontSize={'12px'}/></Button>
-                    <Button size='xs' variant='transparent'><IconTrash color='red' fontSize={'12px'}/></Button>
+                    <Button size='xs' variant='transparent' onClick={()=>{
+                        if(confirm('Are you sure you want to delete this user?')){
+                            handleUserDelete(item._id)
+                        }
+                    }}><IconTrash color='red' fontSize={'12px'}/></Button>
                     <Button variant='transparent' size="xs" onClick={()=>{openImageModal(item)}}>
                         <IconCamera fontSize={'12px'}/>
                     </Button>
@@ -136,8 +163,9 @@ export default function Users() {
                 <Text size="xl">Users</Text>
                 <Button onClick={()=>dispatch(openModal({title:'Create User',type:'createUser',size:'lg'}))}> Add User</Button>
             </div>
-            <div style={{display:'flex', justifyContent:'center',backgroundColor:'white'}}>
-                {tableContent}
+            <hr />
+            <div style={{display:'flex', justifyContent:'center',backgroundColor:'white',marginBottom:'5px'}}>
+                <Table.ScrollContainer minWidth={1050}>{tableContent}</Table.ScrollContainer>
             </div>
         </Container>
         {type==='createUser' &&

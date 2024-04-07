@@ -43,8 +43,15 @@ export const userApi = apiSlice.injectEndpoints({
                 method:'PATCH',
                 body:form
             })
-        })
+        }),
+        deleteUserById: builder.mutation({
+            query: (id)=>({
+                url:`/users/${id}`,
+                method:'DELETE'
+            })
+        }),
+        
     })
 })
 
-export const {useGetAllUsersQuery, usePostUserMutation, useGetUserByIdQuery, usePatchUserByIdMutation, useUploadProfileImageMutation, usePatchUserByUserMutation } = userApi
+export const {useGetAllUsersQuery, usePostUserMutation, useGetUserByIdQuery, usePatchUserByIdMutation, useUploadProfileImageMutation, usePatchUserByUserMutation,useDeleteUserByIdMutation } = userApi

@@ -1,6 +1,6 @@
 import { closeModal } from '@/lib/redux/features/modal/modalSlice';
 import { useGetAllUsersQuery, usePatchUserByIdMutation, usePatchUserByUserMutation, usePostUserMutation } from '@/lib/redux/features/user/userApi';
-import { Button, Checkbox, Grid, Group, TextInput,Box } from '@mantine/core'
+import { Button, Checkbox, Grid, Group, TextInput,Box, Select } from '@mantine/core'
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import React, { useEffect } from 'react'
@@ -15,6 +15,17 @@ export default function UserEditModalBody({user,refetch}:{user:any,refetch:any})
     const [patchUserByUser, {isLoading:updateByUserLoading}] = usePatchUserByUserMutation()
 
     const dispatch = useDispatch();
+
+    const bloodGroups = [
+        { label: "A+", value: "A positive" },
+        { label: "A-", value: "A negative" },
+        { label: "B+", value: "B positive" },
+        { label: "B-", value: "B negative" },
+        { label: "AB+", value: "AB positive" },
+        { label: "AB-", value: "AB negative" },
+        { label: "O+", value: "O positive" },
+        { label: "O-", value: "O negative" }
+      ];
 
     useEffect(()=>{ 
         form.setValues({
@@ -147,10 +158,11 @@ export default function UserEditModalBody({user,refetch}:{user:any,refetch:any})
 
                     <Grid mb={'sm'}>
                         <Grid.Col span={{ base: 12, md: 6 }}>
-                            <TextInput
-                                // withAsterisk
-                                label="Blood Group"
-                                placeholder="A+"
+                            <Select
+                                label="Your Blood Group"
+                                placeholder="Pick value"
+                                data={bloodGroups}
+                                value={form.values.bloodGroup}
                                 {...form.getInputProps('bloodGroup')}
                             />
                         </Grid.Col>
