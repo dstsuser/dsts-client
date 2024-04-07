@@ -8,6 +8,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Pagination,Autoplay,Mousewheel } from 'swiper/modules';
+import { useGetAllBlogsQuery } from '@/lib/redux/features/blog/blogApi';
 
 
 
@@ -62,7 +63,11 @@ function Card({ image, title, category }: CardProps) {
       shadow="md"
       p="xl"
       radius="md"
-      style={{ backgroundImage: `url(${image})` }}
+
+      style={{ 
+        // backgroundImage: `url(${image})`,
+        backgroundImage:`linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${image})`,
+       }}
       className={classes.card}
     >
       <div>
@@ -81,6 +86,8 @@ function Card({ image, title, category }: CardProps) {
 }
 
 function HomeCarousel() {
+
+  const {data,isLoading, isError} = useGetAllBlogsQuery('')
 
   return (
     <div className={classes.mainWrapper} style={{backgroundColor:'#F6F6F6'}}>
@@ -109,11 +116,15 @@ function HomeCarousel() {
           
           
           >
-            {data.map((item) => (
-              <SwiperSlide key={item.title}>
-                <Card {...item} />
-              </SwiperSlide>
-            ))}
+            {
+              isLoading ? <div>Loading...</div> : isError ? <div>Error...</div> : data?.blogPosts?.map((item:any) => {
+                return(
+                  <SwiperSlide key={item._id}>
+                    <Card image={item?.imageLink} title={item?.title} category={item?.category} />
+                  </SwiperSlide>
+                )
+              })
+            }
           </Swiper>
       </Container>
     </div>
