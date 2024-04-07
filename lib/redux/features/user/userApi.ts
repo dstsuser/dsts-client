@@ -30,6 +30,13 @@ export const userApi = apiSlice.injectEndpoints({
                 body:data
             })
         }),
+        patchUserByUser: builder.mutation({
+            query: ({data})=>({
+                url:`/users/update`,
+                method:'PATCH',
+                body:data
+            })
+        }),
         uploadProfileImage: builder.mutation({
             query: ({id,form})=>({
                 url:`/users/${id}/upload-avatar`,
@@ -40,4 +47,4 @@ export const userApi = apiSlice.injectEndpoints({
     })
 })
 
-export const {useGetAllUsersQuery, usePostUserMutation, useGetUserByIdQuery, usePatchUserByIdMutation, useUploadProfileImageMutation } = userApi
+export const {useGetAllUsersQuery, usePostUserMutation, useGetUserByIdQuery, usePatchUserByIdMutation, useUploadProfileImageMutation, usePatchUserByUserMutation } = userApi

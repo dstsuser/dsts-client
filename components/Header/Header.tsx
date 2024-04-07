@@ -44,6 +44,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import logo from '../../assets/images/logo.png'
 import NextImage from 'next/image';
+import { userLoggedOut } from '@/lib/redux/features/auth/authSlice';
 
 
   const mockdata = [
@@ -123,6 +124,12 @@ export function Header() {
   console.log(user)
 
   const router = useRouter()
+
+  const handleLoggedOut = ()=>{
+    
+    dispatch(userLoggedOut())
+    router.push('/login')
+  }
     
   const onHandleClick = (button:string)=>{
     if(button === 'login'){
@@ -162,31 +169,9 @@ export function Header() {
                   </a>
                 </HoverCard.Target>
                 <HoverCard.Dropdown style={{ overflow: 'hidden' }}>
-                  {/* <Group justify="space-between" px="md">
-                    <Text fw={500}>Features</Text>
-                    <Anchor href="#" fz="xs">
-                      View all
-                    </Anchor>
-                  </Group> */}
-                  {/* <Divider my="sm" /> */}
-
                   <SimpleGrid cols={1} spacing={0}>
                     {links}
                   </SimpleGrid>
-
-                  {/* <div className={classes.dropdownFooter}>
-                    <div>
-                      {
-                        data?.committee?.map((item:any)=>{
-                          return <div key={item?._id}>
-                            <Text size="sm" fw={500}>
-                              {item?.name}
-                            </Text>
-                          </div>
-                        })
-                      }
-                    </div>
-                  </div> */}
                 </HoverCard.Dropdown>
               </HoverCard>
               <a href="#" className={classes.link}>
@@ -233,8 +218,9 @@ export function Header() {
           opened={drawerOpened}
           onClose={closeDrawer}
           size="100%"
+          style={{height:'8vh'}}
           padding="md"
-          title="Navigation"
+          title="DSTS"
           hiddenFrom="sm"
           zIndex={1000000}
         >
@@ -247,7 +233,7 @@ export function Header() {
             <UnstyledButton className={classes.link} onClick={toggleLinks}>
               <Center inline>
                 <Box component="span" mr={5}>
-                  Features
+                  Committee
                 </Box>
                 <IconChevronDown
                   style={{ width: rem(16), height: rem(16) }}
@@ -256,18 +242,24 @@ export function Header() {
               </Center>
             </UnstyledButton>
             <Collapse in={linksOpened}>{links}</Collapse>
-            <a href="#" className={classes.link}>
-              Learn
-            </a>
-            <a href="#" className={classes.link}>
-              Academy
-            </a>
-            <Divider my="sm" />
+            
+            {auth?(
+              <>
+                <Link href="/dashboard" className={classes.link}>
+                Profile 
+              </Link>
+              <Link href='' className={classes.link} onClick={()=>handleLoggedOut()}>
+                Logout
+              </Link>
+              </>
+            )
+            :
             <Group justify="center" grow pb="xl" px="md">
-              <ThemeSwitch />
-              <Button variant="default" onClick={()=>onHandleClick('login')}>Log in</Button>
+              <Divider my="sm" />
+               <Button variant="default" onClick={()=>onHandleClick('login')}>Log in</Button>
               <Button onClick={()=>onHandleClick('signup')}>Sign up</Button>
             </Group>
+          }
           </ScrollArea>
         </Drawer>
       </Box>

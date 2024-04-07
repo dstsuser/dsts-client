@@ -131,18 +131,18 @@ export default function Users() {
 
   return (
     <>
-        <Container size='xl' py="md">
-            <div style={{display:'flex',justifyContent:'space-between'}}>
+        <Container size='xl' py="md" >
+            <div style={{display:'flex',justifyContent:'space-between',backgroundColor:'white',padding:'15px'}}>
                 <Text size="xl">Users</Text>
                 <Button onClick={()=>dispatch(openModal({title:'Create User',type:'createUser',size:'lg'}))}> Add User</Button>
             </div>
-            <div style={{display:'flex', justifyContent:'center'}}>
+            <div style={{display:'flex', justifyContent:'center',backgroundColor:'white'}}>
                 {tableContent}
             </div>
         </Container>
         {type==='createUser' &&
         <SimpleModal>
-            <UserEditModalBody user={''}/>
+            <UserEditModalBody user={''} refetch={refetch}/>
         </SimpleModal>}
         {type==='uploadImage' &&
         <SimpleModal>
@@ -158,7 +158,7 @@ export default function Users() {
 
         {type==='editUser' &&
         <SimpleModal>
-            <UserEditModalBody user={user} />
+            <UserEditModalBody user={user} refetch={refetch}/>
         </SimpleModal>
         }
     </>

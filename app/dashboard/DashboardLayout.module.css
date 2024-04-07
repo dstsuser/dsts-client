@@ -2,6 +2,18 @@
   height: 100vh;
 }
 
+.layoutDivsContainer{
+  display: flex;
+  height: 92vh;
+}
+
+/* mobile responsive layoutNav */
+@media (max-width: 768px) {
+  .layoutNav {
+    display: none;
+  }
+}
+
 .navbar {
     height: 92vh;
     width: rem(300px);
@@ -9,6 +21,13 @@
     display: flex;
     flex-direction: column;
     border-right: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+  }
+
+  /* mobile responsive navbar */
+  @media (max-width: 768px) {
+    .navbar {
+      display: none;
+    }
   }
   
   .navbarMain {
@@ -65,3 +84,5 @@
     width: rem(25px);
     height: rem(25px);
   }
+
+  /*  */

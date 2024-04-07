@@ -4,5 +4,5 @@ import React from 'react'
 
 export default function Dashboard() {
   const router = useRouter()
-  router.push('/dashboard/users')
+  router.push('/dashboard/profile')
 }

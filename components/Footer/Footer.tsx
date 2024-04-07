@@ -1,4 +1,4 @@
-import { Anchor, Group, ActionIcon, rem, Container, Image } from '@mantine/core';
+import { Anchor, Group, ActionIcon, rem, Container, Image, Text } from '@mantine/core';
 import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
 import classes from './Footer.module.css';
 import logo from '../../assets/images/logo.png'
@@ -33,7 +33,9 @@ export function Footer() {
           <div className={classes.inner}>
       <Image component={NextImage} style={{height:'50px',width:'50px'}} height={1000} width={1000} src={logo} alt="dsts logo" />
 
-        <Group className={classes.links}>{items}</Group>
+        <Text size="sm" c="dimmed" >
+          © 2024 All rights reserved
+        </Text>
 
         <Group gap="xs" justify="flex-end" wrap="nowrap">
           <ActionIcon size="lg" variant="default" radius="xl">

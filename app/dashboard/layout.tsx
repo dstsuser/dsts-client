@@ -23,7 +23,7 @@ import { userLoggedOut } from '@/lib/redux/features/auth/authSlice';
 import useAuth from '@/hooks/useAuth';
 import { Header } from '@/components/Header/Header';
 const data = [
-  // { link: '', label: 'Profile', icon: IconBellRinging, access:'USER' },
+  { link: '/dashboard/profile', label: 'Profile', icon: IconBellRinging, access:'USER' },
   // { link: '', label: 'Billing', icon: IconReceipt2, access:'USER'},
   // { link: '', label: 'Security', icon: IconFingerprint, access:'USER'},
   // { link: '', label: 'SSH Keys', icon: IconKey },
@@ -75,7 +75,7 @@ export default function NavbarSimple({children}:{children:any}) {
   return (
     <div className={classes.wrapper}>
       <Header/>
-      <div style={{display:'flex',height:'92vh'}} >
+      <div  className={classes.layoutDivsContainer} >
           <nav className={classes.navbar}>
               <div className={classes.navbarMain}>
                   {links}
@@ -88,7 +88,7 @@ export default function NavbarSimple({children}:{children:any}) {
                   </a>
               </div>
           </nav>
-          <div style={{width:'100%',overflowY:'auto'}}>
+          <div style={{width:'100%',overflowY:'auto',backgroundColor:'#F6F6F6'}} >
               {children}
           </div>
       </div>

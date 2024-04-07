@@ -1,19 +1,20 @@
 import { closeModal } from '@/lib/redux/features/modal/modalSlice';
-import { useGetAllUsersQuery, usePatchUserByIdMutation, usePostUserMutation } from '@/lib/redux/features/user/userApi';
+import { useGetAllUsersQuery, usePatchUserByIdMutation, usePatchUserByUserMutation, usePostUserMutation } from '@/lib/redux/features/user/userApi';
 import { Button, Checkbox, Grid, Group, TextInput,Box } from '@mantine/core'
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
-export default function UserEditModalBody({user}:{user:any}) {
+export default function UserEditModalBody({user,refetch}:{user:any,refetch:any}) {
 
     const {type} = useSelector((state:any)=>state.modal)
     const form = useForm();
     const [patchUserById,{isLoading:updateLoading}] = usePatchUserByIdMutation()
     const [postUser,{isLoading:postLoading}] = usePostUserMutation()
+    const [patchUserByUser, {isLoading:updateByUserLoading}] = usePatchUserByUserMutation()
+
     const dispatch = useDispatch();
-    const {refetch} = useGetAllUsersQuery('user')
 
     useEffect(()=>{ 
         form.setValues({
@@ -37,10 +38,13 @@ export default function UserEditModalBody({user}:{user:any}) {
         })
     },[user])
 
-    const handleEditUser = (values:any) => {
-        patchUserById({id:user._id,data:values})
+    const handleEditUser = (values:any,fun:any) => {
+        fun({
+            id:user._id,
+            data:values
+        })
         .unwrap()
-        .then((res)=>{
+        .then((res:any)=>{
             if(res){
                 dispatch(closeModal())
                 refetch()
@@ -50,7 +54,7 @@ export default function UserEditModalBody({user}:{user:any}) {
                   })
             }
         })
-        .catch((err)=>{
+        .catch((err:any)=>{
             console.log(err)
             notifications.show({
                 title: 'Error 😢',
@@ -82,9 +86,12 @@ export default function UserEditModalBody({user}:{user:any}) {
     }
 
     const handleUser = (values:any) => {
-        if(type === 'editUser'){
-            handleEditUser(values)
-        }else if(type === 'createUser'){
+        if(type === 'editUserByUser'){
+            handleEditUser(values,patchUserByUser)
+        }else if(type=== 'editUser'){
+            handleEditUser(values,patchUserById)
+        }
+        else if(type === 'createUser'){
             handleCreateUser(values)
         }
     }
@@ -249,6 +256,10 @@ export default function UserEditModalBody({user}:{user:any}) {
                         {
                             type === 'editUser' &&
                             <Button type="submit">{updateLoading? 'Updating..':'Update'}</Button>
+                        }
+                        {
+                            type === 'editUserByUser' &&
+                            <Button type="submit">{updateByUserLoading? 'Updating..':'Update'}</Button>
                         }
                         {
                             type === 'createUser' &&

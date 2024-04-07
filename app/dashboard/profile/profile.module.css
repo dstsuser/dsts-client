@@ -1,0 +1,33 @@
+.wrapper{
+    background-color: white;
+    padding: 30px;
+}
+.userDiv{
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.infoDiv{
+
+}
+.editButtonText{
+    display: block;
+}
+.editButtonIcon{
+    display: none;
+}
+
+/* mobile responsive */
+
+@media (max-width: 768px) {
+    .wrapper{
+        padding: 10px;
+    }
+    .editButtonIcon{
+        display: block;
+    }
+    .editButtonText{
+        display: none;
+    }
+}

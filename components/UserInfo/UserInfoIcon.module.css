@@ -1,0 +1,46 @@
+.icon {
+    color: light-dark(var(--mantine-color-gray-5), var(--mantine-color-dark-3));
+  }
+
+  .profilePhoto{
+    position: relative;
+  }
+
+  .uploadImageDiv{
+    position: absolute;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.1);
+    bottom: 0px;
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    border-end-start-radius:5px ;
+    border-end-end-radius:5px ;
+    font-size: 12px;
+    /* justify-items: center; */
+    cursor: pointer;
+  }
+  
+  .name {
+    font-family:
+      Greycliff CF,
+      var(--mantine-font-family);
+  }
+
+  .group{
+    flex-wrap: nowrap;
+  }
+
+  /* mobile responsive */
+
+@media (max-width: 768px) {
+    .group{
+    flex-wrap: wrap;
+    justify-content: center;
+    }
+    .name{
+        font-size: 1.5rem;
+        text-align: center;
+    }
+}
