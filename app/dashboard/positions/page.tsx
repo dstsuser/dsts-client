@@ -119,12 +119,6 @@ export default function Positions() {
                 </form>
             </Box>
         </SimpleModal>}
-
-        {type==='editUser' &&
-        <SimpleModal>
-            <UserEditModalBody user={user} />
-        </SimpleModal>
-        }
     </>
   )
 }
