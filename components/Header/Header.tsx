@@ -45,7 +45,6 @@ import { useEffect, useState } from 'react';
 import logo from '../../assets/images/logo.png'
 import NextImage from 'next/image';
 import { userLoggedOut } from '@/lib/redux/features/auth/authSlice';
-import useRoleAdmin from '@/hooks/useRoleAdmin';
 
 
 
@@ -227,7 +226,7 @@ export function Header() {
                 <Link href="/dashboard" className={classes.link}>
                 Profile 
               </Link>
-              {useRoleAdmin() &&
+              {user.roles.includes('ADMIN') &&
                 <>
                 <Link href="/dashboard/users" className={classes.link}>
                   Users 

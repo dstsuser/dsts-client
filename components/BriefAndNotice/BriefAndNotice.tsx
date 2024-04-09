@@ -1,24 +1,22 @@
-import { Container, Grid, SimpleGrid, Skeleton, rem } from '@mantine/core';
+import { Container, Grid, GridCol, SimpleGrid, Skeleton, rem } from '@mantine/core';
 import HomeNotice from '../HomeNotice/HomeNotice';
 import Brief from '../Brief/Brief';
 
-const PRIMARY_COL_HEIGHT = rem(300);
-
 export function BriefAndNotice() {
-  const SECONDARY_COL_HEIGHT = `calc(${PRIMARY_COL_HEIGHT} / 2 - var(--mantine-spacing-md) / 2)`;
+
 
   return (
-    <div style={{backgroundColor:'#F6F6F6'}}>
+    <div style={{backgroundColor:'#F6F6F6',paddingTop:'50px',paddingBottom:'50px'}}>
       <Container size='lg'>
-      <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">
-        <div style={{height:'400px'}}>
-            <HomeNotice/>
-        </div>
-        <div>
-            <Brief/>
-        </div>
-      </SimpleGrid>
-    </Container>
+        <Grid >
+          <GridCol span={{base:12, md:8, lg:8}}>
+              <HomeNotice/>
+          </GridCol>
+          <GridCol span={{base:12, md:4, lg:4}}>
+              <Brief/>
+          </GridCol>
+        </Grid>
+      </Container>
     </div>
   );
 }

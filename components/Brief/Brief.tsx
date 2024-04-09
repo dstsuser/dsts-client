@@ -1,59 +1,41 @@
 import { Card, Grid, Text } from '@mantine/core'
 import React from 'react'
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination,Autoplay,Mousewheel } from 'swiper/modules';
+
+import 'swiper/css';
+import 'swiper/css/pagination';
+import BriefCard from './BriefCard';
+import { useGetAllFacesQuery } from '@/lib/redux/features/faces/facesApi';
 const classes = require('./Brief.module.css')
 
+
 export default function Brief() {
+
+    const {isLoading,isError,data} = useGetAllFacesQuery('')
+
   return (
     <div>
-      <h2>Faces of DSTS</h2>
-        <div className={classes.wrapper}>
-        
-            <Card shadow='sm' mb="xs" p="xs" withBorder>
-                <Grid>
-                    <Grid.Col span={2}>
-                    <div className={classes.noticeDate}>
-                        <Text size='lg' >25</Text>
-                        <Text size='xs'>March</Text>
-                    </div>
-                    </Grid.Col>
-                    <Grid.Col span={10}>
-                        <Text mt="xs" c="dimmed" m="0" size="sm">
-                            Please click anywhere on this card to claim your reward, this is not a fraud, trust us
-                        </Text>
-                    </Grid.Col>
-                </Grid>
-            </Card>
-            <Card shadow='sm' mb="xs" p="xs" withBorder>
-                <Grid>
-                    <Grid.Col span={2}>
-                    <div className={classes.noticeDate}>
-                        <Text size='lg'>25</Text>
-                        <Text size='xs'>March</Text>
-                    </div>
-                    </Grid.Col>
-                    <Grid.Col span={10}>
-                        <Text mt="xs" c="dimmed" m="0" size="sm">
-                            Please click anywhere on this card to claim your reward, this is not a fraud, trust us
-                        </Text>
-                    </Grid.Col>
-                </Grid>
-            </Card>
-            <Card shadow='sm' mb="xs" p="xs" withBorder>
-                <Grid>
-                    <Grid.Col span={2}>
-                    <div className={classes.noticeDate}>
-                        <Text size='lg'>25</Text>
-                        <Text size='xs'>March</Text>
-                    </div>
-                    </Grid.Col>
-                    <Grid.Col span={10}>
-                        <Text mt="xs" c="dimmed" m="0" size="sm">
-                            Please click anywhere on this card to claim your reward, this is not a fraud, trust us
-                        </Text>
-                    </Grid.Col>
-                </Grid>
-            </Card>
-            
+      <h2 className={classes.title}>Faces of DSTS</h2>
+        <div >
+            <Swiper 
+                modules={[Pagination,Autoplay,Mousewheel]}
+                slidesPerView={1}
+                pagination={{ clickable: true }}
+                autoplay={{ delay: 3000 }}
+                mousewheel={true}
+                className={classes.swiper}
+            >
+            {
+              isLoading ? <div>Loading...</div> : isError ? <div>Error...</div> : data?.facesOfOrg?.map((item:any) => {
+                return( 
+                    <SwiperSlide key={item._id}>
+                        <BriefCard data={item} key={item._id} />
+                    </SwiperSlide>
+                 )
+              })
+            } 
+            </Swiper>
         </div>
     </div>
   )
