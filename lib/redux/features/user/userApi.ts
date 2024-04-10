@@ -10,6 +10,13 @@ export const userApi = apiSlice.injectEndpoints({
                 method:'GET'
             })
         }),
+
+        searchUsers: builder.mutation({
+            query: (data)=>({
+                url:`/users/search?searchParam=${data.searchParam}`,
+                method:'GET',
+            })
+        }),
         postUser: builder.mutation({
             query: (data)=>({
                 url:'/users',
@@ -50,8 +57,9 @@ export const userApi = apiSlice.injectEndpoints({
                 method:'DELETE'
             })
         }),
+
         
     })
 })
 
-export const {useGetAllUsersQuery, usePostUserMutation, useGetUserByIdQuery, usePatchUserByIdMutation, useUploadProfileImageMutation, usePatchUserByUserMutation,useDeleteUserByIdMutation } = userApi
+export const {useGetAllUsersQuery, usePostUserMutation, useGetUserByIdQuery, usePatchUserByIdMutation, useUploadProfileImageMutation, usePatchUserByUserMutation,useDeleteUserByIdMutation,useSearchUsersMutation } = userApi

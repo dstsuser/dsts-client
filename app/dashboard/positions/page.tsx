@@ -92,8 +92,9 @@ export default function Positions() {
                 <Button onClick={()=>dispatch(openModal({title:'Create Position',type:'createPosition',size:'md'}))}> Add Position</Button>
             </div>
             <div style={{display:'flex', justifyContent:'center'}}>
-                {tableContent}
+            <Table.ScrollContainer minWidth={1050}>{tableContent}</Table.ScrollContainer>
             </div>
+            
         </Container>
         {type==='createPosition' &&
         <SimpleModal>

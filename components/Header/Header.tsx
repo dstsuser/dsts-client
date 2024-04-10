@@ -152,18 +152,12 @@ export function Header() {
                   </SimpleGrid>
                 </HoverCard.Dropdown>
               </HoverCard>
-              <a href="#" className={classes.link}>
+              <Link href="/members" className={classes.link}>
                 Members
-              </a>
-              <a href="#" className={classes.link}>
-                Blogs
-              </a>
-              <a href="#" className={classes.link}>
-                About Us
-              </a>
-              <Link href="/contact" className={classes.link}>
-                Contact
               </Link>
+              <a href="photo-gallery" className={classes.link}>
+                Photo Gallery
+              </a>
             </Group>
 
             <Group visibleFrom="sm">
