@@ -5,6 +5,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import SimpleModal from '../Modals/SimpleModal';
 const classes = require('./HomeNotice.module.css')
+import noticeDsts from '../../assets/images/noticedsts.jpg'
 
 export default function HomeNotice() {
 
@@ -61,6 +62,9 @@ export default function HomeNotice() {
                     </div>
             </Card>
             ))}    
+            <div>
+                <Image src={'https://res.cloudinary.com/dulrojf39/image/upload/v1712779126/noticedsts_q9s9py.jpg'} alt='notice' width='100%' height='100%'/>
+            </div>
         </div>
         {type === 'notice' &&
             <SimpleModal>

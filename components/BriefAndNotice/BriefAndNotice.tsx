@@ -6,7 +6,7 @@ export function BriefAndNotice() {
 
 
   return (
-    <div style={{backgroundColor:'#F6F6F6',paddingTop:'50px',paddingBottom:'50px'}}>
+    <div style={{backgroundColor:'#F6F6F6',paddingTop:'80px',paddingBottom:'80px'}}>
       <Container size='lg'>
         <Grid >
           <GridCol span={{base:12, md:8, lg:8}}>

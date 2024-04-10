@@ -6,22 +6,30 @@
   background-color: rgba(0, 0,0, 0.7) !important;
 }
 
-.title {
+
+  .title{
     font-weight: 900;
-    color: white;
     line-height: 1.2;
-    font-size: 90px;
+    font-size: 70px;
+    font-family: 'Raleway', sans-serif;
     margin: 0;
     cursor: default;
-  }
+    background: linear-gradient(to right, white, green, red);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
 
   .subTitle{
     font-weight: 700;
     color: white;
     line-height: 1.2;
-    font-size: 40px;
+    font-size: 20px;
+    font-family: 'Raleway', sans-serif;
     margin: 0;
     cursor: default;
+    text-transform: uppercase;
   }
   
   /* make card, title and subtitle for mobile responsive */

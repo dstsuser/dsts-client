@@ -155,9 +155,9 @@ export function Header() {
               <Link href="/members" className={classes.link}>
                 Members
               </Link>
-              <a href="photo-gallery" className={classes.link}>
+              <Link href="photo-gallery" className={classes.link}>
                 Photo Gallery
-              </a>
+              </Link>
             </Group>
 
             <Group visibleFrom="sm">
@@ -204,7 +204,7 @@ export function Header() {
             </a>
             <UnstyledButton className={classes.link} onClick={toggleLinks}>
               <Center inline>
-                <Box component="span" mr={5}>
+                <Box ps={'md'} component="span" mr={5}>
                   Committee
                 </Box>
                 <IconChevronDown
@@ -214,6 +214,13 @@ export function Header() {
               </Center>
             </UnstyledButton>
             <Collapse in={linksOpened}>{links}</Collapse>
+
+            <Link href="/members" className={classes.link}>
+                Members
+              </Link>
+              <Link href="photo-gallery" className={classes.link}>
+                Photo Gallery
+              </Link>
             
             {auth?(
               <>

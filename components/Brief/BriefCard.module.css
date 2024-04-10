@@ -1,5 +1,6 @@
 .card {
     position: relative;
+    height: 360px;
     background-color: var(--mantine-color-body);
   }
   
