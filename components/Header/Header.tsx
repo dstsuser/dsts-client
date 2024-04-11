@@ -158,7 +158,7 @@ export function Header() {
             </Group>
 
             <Group visibleFrom="sm">
-              <ThemeSwitch />
+             {/* <ThemeSwitch />*/}
               {
                 auth? (
                   <div style={{display:'flex',gap:'5px',alignItems:'center'}}>
