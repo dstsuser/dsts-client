@@ -201,7 +201,7 @@ export function Header() {
             </a>
             <UnstyledButton className={classes.link} onClick={toggleLinks}>
               <Center inline>
-                <Box ps={'md'} component="span" mr={5}>
+                <Box component="span" mr={5}>
                   Committee
                 </Box>
                 <IconChevronDown
