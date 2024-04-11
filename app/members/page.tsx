@@ -91,7 +91,7 @@ export default function page() {
               py={4}
               value={value}
               onChange={(event) => setValue(event.currentTarget.value)}
-              placeholder="Search ny name"
+              placeholder="Search by name"
               rightSection={<IconSearch/>}
 
             />

@@ -1,6 +1,7 @@
 import React from 'react'
 import classes from './CommiteeMemberCard.module.css'
 import { Card, Group, Image, Text } from '@mantine/core'
+import notFoundImage from "@/assets/images/no-image.jpg"
 
 export default function CommitteeMemberCard({member}:{member:any}) {
     console.log(member)
@@ -9,7 +10,7 @@ export default function CommitteeMemberCard({member}:{member:any}) {
         <Card.Section>
         <Image
             radius={'lg'}
-            src={member?.user?.avatar}
+            src={member?.user?.avatar? member?.user?.avatar : 'https://res.cloudinary.com/dulrojf39/image/upload/v1712818933/default-featured-image.png_hoflhx.jpg'}
             height={290}
             alt={member?.user?.fullName}
         />

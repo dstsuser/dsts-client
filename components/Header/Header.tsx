@@ -86,14 +86,11 @@ export function Header() {
     }
 
     const links = data?.committee?.map((item:any) => (
-      <UnstyledButton mb={'xs'} onClick={()=>handleNavigateToCommittee(item)} className={classes.subLink} key={item.title}>
+      <UnstyledButton p={'md'} mb={'xs'} onClick={()=>handleNavigateToCommittee(item)} className={classes.subLink} key={item.title}>
         <Group wrap="nowrap" align="flex-start">
           <div>
             <Text size="sm" fw={500}>
               {`${capitalizeFirstLetter(item?.type)} Committee`}
-            </Text>
-            <Text size="xs" c="dimmed">
-              {item.formingDate}
             </Text>
           </div>
         </Group>
