@@ -13,7 +13,8 @@ import './global.css';
 
 export const metadata = {
   title: 'DSTS Association',
-  description: 'I am using Mantine with Next.js!',
+  description: `Established in 1995 by A.K.M Jahangir at Dhaka University, the Dhakasto Sakhipur Thana Students Association (DSTS) unites students from Sakhipur Thana, Tangail District. Dedicated to empowering youth, DSTS provides guidance for university admissions and fosters leadership qualities. Our initiatives include community events, social engagement, scholarships, and cultural celebrations, enriching education while honoring Sakhipur's heritage. Committed to student growth and community development, DSTS continues to shape a brighter future for Sakhipur and its residents.`,
+  keywords:['dsts association','sakhipur thana','students association bangladesh','tangail district']
 };
 
 export default function RootLayout({ children }: { children: any }) {
