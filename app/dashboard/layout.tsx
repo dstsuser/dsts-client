@@ -14,6 +14,11 @@ import {
   IconLogout,
   IconUserPlus,
   IconUserCode,
+  IconBrandBlogger,
+  IconUser,
+  IconNotification,
+  IconAlbum,
+  IconPhoto,
 } from '@tabler/icons-react';
 import { MantineLogo } from '@mantinex/mantine-logo';
 import classes from './DashboardLayout.module.css';
@@ -23,13 +28,15 @@ import { userLoggedOut } from '@/lib/redux/features/auth/authSlice';
 import useAuth from '@/hooks/useAuth';
 import { Header } from '@/components/Header/Header';
 const data = [
-  { link: '/dashboard/profile', label: 'Profile', icon: IconBellRinging, access:'USER' },
-  // { link: '', label: 'Billing', icon: IconReceipt2, access:'USER'},
-  // { link: '', label: 'Security', icon: IconFingerprint, access:'USER'},
-  // { link: '', label: 'SSH Keys', icon: IconKey },
+  { link: '/dashboard/profile', label: 'Profile', icon: IconUser, access:'USER' },
   { link: '/dashboard/users', label: 'Users', icon: IconUsersGroup, access:'ADMIN' },
   { link: '/dashboard/committees', label: 'Committees', icon: IconUsersGroup },
   { link: '/dashboard/positions', label: 'Positions', icon: IconUserCode },
+  { link: '/dashboard/notice', label: 'Notice', icon: IconNotification },
+  { link: '/dashboard/photo-gallery', label: 'Photo Gallery', icon: IconPhoto },
+  { link: '/dashboard/my-blogs', label: 'My Blogs', icon: IconBrandBlogger },
+  { link: '/dashboard/settings', label: 'Settings', icon: IconSettings },
+
 ];
 
 export default function NavbarSimple({children}:{children:any}) {
