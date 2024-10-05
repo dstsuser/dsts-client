@@ -62,9 +62,9 @@ export default function HomeNotice() {
                     </div>
             </Card>
             ))}    
-            <div>
+            {/* <div>
                 <Image src={'https://res.cloudinary.com/dulrojf39/image/upload/v1712779126/noticedsts_q9s9py.jpg'} alt='notice' width='100%' height='100%'/>
-            </div>
+            </div> */}
         </div>
         {type === 'notice' &&
             <SimpleModal>
